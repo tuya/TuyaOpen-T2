@@ -8,7 +8,7 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR Linux)
 
 # 设置工具链目录
-set(TOOLCHAIN_DIR "${BOARD_PATH}/gcc-arm-none-eabi-10.3-2021.10")
+set(TOOLCHAIN_DIR "${PLATFORM_PATH}/gcc-arm-none-eabi-10.3-2021.10")
 set(TOOLCHAIN_PRE "arm-none-eabi-")
 
 # set(TOOLCHAIN_INCLUDE
@@ -18,7 +18,7 @@ set(TOOLCHAIN_PRE "arm-none-eabi-")
 #     ${TOOLCHAIN_DIR}/lib/gcc
 #     )
 
-message(STATUS "[TOP] BOARD_PATH: ${BOARD_PATH}")
+message(STATUS "[TOP] PLATFORM_PATH: ${PLATFORM_PATH}")
 
 # 设置编译器位置
 execute_process(COMMAND uname -s OUTPUT_VARIABLE OS_NAME ERROR_VARIABLE error)
@@ -54,8 +54,8 @@ set(CMAKE_C_FLAGS "-g -mthumb -mcpu=arm968e-s -march=armv5te -mthumb-interwork -
 
 # LIB_PUBLIC_INC
 # execute_process(
-#     COMMAND find ${BOARD_PATH}/tuyaos/tuyaos_adapter -type d
-#     OUTPUT_VARIABLE BOARD_PUBINC
+#     COMMAND find ${PLATFORM_PATH}/tuyaos/tuyaos_adapter -type d
+#     OUTPUT_VARIABLE PLATFORM_PUBINC
 # )
 
-# string(REGEX REPLACE "\n" ";" BOARD_PUBINC "${BOARD_PUBINC}")
+# string(REGEX REPLACE "\n" ";" PLATFORM_PUBINC "${PLATFORM_PUBINC}")
