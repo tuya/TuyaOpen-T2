@@ -11,12 +11,32 @@ menu "configure bk7231n"
         bool "ENABLE_WIFI --- use wifi to connect"
         default y
 
-    config ENABLE_WATCHDOG
-        bool "ENABLE_WATCHDOG --- use watchdog"
-        default y
-
     config ENABLE_BLUETOOTH
         bool "ENABLE_BLUETOOTH --- use bluetooth to connect"
+        default y
+    
+    config ENABLE_ADC
+        bool "ENABLE_ADC --- use adc"
+        default y
+
+    config ENABLE_GPIO
+        bool "ENABLE_ADC --- use gpio"
+        default y
+
+    config ENABLE_PWM
+        bool "ENABLE_ADC --- use pwm"
+        default y
+
+    config ENABLE_SPI
+        bool "ENABLE_ADC --- use spi"
+        default y
+
+    config ENABLE_TIMER
+        bool "ENABLE_ADC --- use timer"
+        default y
+
+    config ENABLE_WATCHDOG
+        bool "ENABLE_WATCHDOG --- use watchdog"
         default y
 
     config LITTLE_END

@@ -14,3 +14,5 @@ beken_os/tools/generate/*.bin
 !beken_os/tools/generate/package.bin
 qt_proj/
 gcc-arm-none-eabi-10.3-2021.10
+#
+CatalogKconfig
