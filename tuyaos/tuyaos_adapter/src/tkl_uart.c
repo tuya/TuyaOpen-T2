@@ -142,7 +142,7 @@ OPERATE_RET tkl_uart_deinit(TUYA_UART_NUM_E port_id)
  *
  * @return return > 0: number of data written; return <= 0: write errror
  */
-int32_t tkl_uart_write(TUYA_UART_NUM_E port_id, VOID_T *buff, UINT16_T len)
+int32_t tkl_uart_write(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     extern void bk_send_byte(UINT8 uport, UINT8 data);
@@ -178,7 +178,7 @@ int32_t tkl_uart_write(TUYA_UART_NUM_E port_id, VOID_T *buff, UINT16_T len)
  *
  * @return none
  */
-VOID_T tkl_uart_rx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB rx_cb)
+void tkl_uart_rx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB rx_cb)
 {
     // --- BEGIN: user implements ---
     bk_uart_t port;
@@ -210,7 +210,7 @@ VOID_T tkl_uart_rx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB rx_cb)
  *
  * @return none
  */
-VOID_T tkl_uart_tx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB tx_cb)
+void tkl_uart_tx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB tx_cb)
 {
     // --- BEGIN: user implements ---
     return ;
@@ -231,7 +231,7 @@ VOID_T tkl_uart_tx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB tx_cb)
  * 
  * @return return >= 0: number of data read; return < 0: read errror
  */
-int32_t tkl_uart_read(TUYA_UART_NUM_E port_id, VOID_T *buff, UINT16_T len)
+int32_t tkl_uart_read(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     bk_uart_t port;

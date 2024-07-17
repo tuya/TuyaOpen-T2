@@ -16,16 +16,16 @@
 typedef struct {
     RINGBUFF_TYPE_E type;   ///< ringbuff type
     uint8_t  reserved;      ///< Reserved
-    UINT16_T in;            ///< position of input
-    UINT16_T out;           ///< position of output
-    UINT16_T len;           ///< length of buff data
+    uint16_t in;            ///< position of input
+    uint16_t out;           ///< position of output
+    uint16_t len;           ///< length of buff data
     uint8_t buff[];         ///< ring buff
 } __RINGBUFF_T;
 
 #define RINGBUFF_SIZE   sizeof(__RINGBUFF_T)
 
 
-static VOID_T __ringbuff_init(__RINGBUFF_T *ringbuff, UINT16_T len)
+static void __ringbuff_init(__RINGBUFF_T *ringbuff, uint16_t len)
 {
     ringbuff->in = 0;
     ringbuff->out = 0;
@@ -33,7 +33,7 @@ static VOID_T __ringbuff_init(__RINGBUFF_T *ringbuff, UINT16_T len)
 }
 
 
-OPERATE_RET tuya_ring_buff_create(UINT16_T len, RINGBUFF_TYPE_E type, TUYA_RINGBUFF_T *ringbuff)
+OPERATE_RET tuya_ring_buff_create(uint16_t len, RINGBUFF_TYPE_E type, TUYA_RINGBUFF_T *ringbuff)
 {
     __RINGBUFF_T *rbuff = NULL;
     __RINGBUFF_T **out_ring_buff = (__RINGBUFF_T **)ringbuff;
@@ -83,9 +83,9 @@ OPERATE_RET tuya_ring_buff_reset(TUYA_RINGBUFF_T ringbuff)
     return OPRT_OK;
 }
 
-UINT16_T tuya_ring_buff_free_size_get(TUYA_RINGBUFF_T ringbuff)
+uint16_t tuya_ring_buff_free_size_get(TUYA_RINGBUFF_T ringbuff)
 {
-    UINT16_T size, in, out;
+    uint16_t size, in, out;
     __RINGBUFF_T *rbuff = (__RINGBUFF_T *)ringbuff;
 
     if(rbuff == NULL) {
@@ -107,9 +107,9 @@ UINT16_T tuya_ring_buff_free_size_get(TUYA_RINGBUFF_T ringbuff)
     return size - 1;
 }
 
-UINT16_T tuya_ring_buff_used_size_get(TUYA_RINGBUFF_T ringbuff)
+uint16_t tuya_ring_buff_used_size_get(TUYA_RINGBUFF_T ringbuff)
 {
-    UINT16_T size, in, out;
+    uint16_t size, in, out;
     __RINGBUFF_T *rbuff = (__RINGBUFF_T *)ringbuff;
 
     if(rbuff == NULL) {
@@ -129,10 +129,10 @@ UINT16_T tuya_ring_buff_used_size_get(TUYA_RINGBUFF_T ringbuff)
     return size;
 }
 
-UINT16_T tuya_ring_buff_write(TUYA_RINGBUFF_T ringbuff, const VOID_T *data, UINT16_T len)
+uint16_t tuya_ring_buff_write(TUYA_RINGBUFF_T ringbuff, const void *data, uint16_t len)
 {
-    UINT16_T tmp_len;
-    UINT16_T free_len;
+    uint16_t tmp_len;
+    uint16_t free_len;
     const uint8_t* pdata = data;
     __RINGBUFF_T *rbuff = (__RINGBUFF_T *)ringbuff;
 
@@ -166,10 +166,10 @@ UINT16_T tuya_ring_buff_write(TUYA_RINGBUFF_T ringbuff, const VOID_T *data, UINT
     return tmp_len + len;
 }
 
-UINT16_T tuya_ring_buff_read(TUYA_RINGBUFF_T ringbuff, VOID_T *data, UINT16_T len)
+uint16_t tuya_ring_buff_read(TUYA_RINGBUFF_T ringbuff, void *data, uint16_t len)
 {
-    UINT16_T tmp_len;
-    UINT16_T used_len;
+    uint16_t tmp_len;
+    uint16_t used_len;
     uint8_t *pdata = data;
     __RINGBUFF_T *rbuff = (__RINGBUFF_T *)ringbuff;
 
@@ -203,11 +203,11 @@ UINT16_T tuya_ring_buff_read(TUYA_RINGBUFF_T ringbuff, VOID_T *data, UINT16_T le
     return tmp_len + len;
 }
 
-UINT16_T tuya_ring_buff_peek(TUYA_RINGBUFF_T ringbuff, VOID_T *data, UINT16_T len)
+uint16_t tuya_ring_buff_peek(TUYA_RINGBUFF_T ringbuff, void *data, uint16_t len)
 {
-    UINT16_T out;
-    UINT16_T tmp_len;
-    UINT16_T used_len;
+    uint16_t out;
+    uint16_t tmp_len;
+    uint16_t used_len;
     uint8_t *pdata = data;
     __RINGBUFF_T *rbuff = (__RINGBUFF_T *)ringbuff;
 

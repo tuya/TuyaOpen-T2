@@ -27,7 +27,7 @@
 *
 * @return none
 */
-VOID_T tkl_system_reset(VOID_T)
+void tkl_system_reset(void)
 {
     // --- BEGIN: user implements ---
     bk_reboot();
@@ -42,7 +42,7 @@ VOID_T tkl_system_reset(VOID_T)
 *
 * @return system tick count
 */
-SYS_TICK_T tkl_system_get_tick_count(VOID_T)
+SYS_TICK_T tkl_system_get_tick_count(void)
 {
     // --- BEGIN: user implements ---
     return (SYS_TICK_T)xTaskGetTickCount();
@@ -56,7 +56,7 @@ SYS_TICK_T tkl_system_get_tick_count(VOID_T)
 *
 * @return system millisecond
 */
-SYS_TIME_T tkl_system_get_millisecond(VOID_T)
+SYS_TIME_T tkl_system_get_millisecond(void)
 {
     // --- BEGIN: user implements ---
     return (SYS_TIME_T)(tkl_system_get_tick_count() * portTICK_RATE_MS);
@@ -96,7 +96,7 @@ int32_t tkl_system_get_random(uint32_t range)
 *
 * @return reset reason
 */
-TUYA_RESET_REASON_E tkl_system_get_reset_reason(CHAR_T** describe)
+TUYA_RESET_REASON_E tkl_system_get_reset_reason(char** describe)
 {
     // --- BEGIN: user implements ---
     unsigned char value = bk_misc_get_start_type() & 0xFF;
@@ -146,7 +146,7 @@ TUYA_RESET_REASON_E tkl_system_get_reset_reason(CHAR_T** describe)
 *
 * @return none
 */
-VOID_T tkl_system_sleep(uint32_t num_ms)
+void tkl_system_sleep(uint32_t num_ms)
 {
     // --- BEGIN: user implements ---
     uint32_t ticks = num_ms / portTICK_RATE_MS;
@@ -168,7 +168,7 @@ VOID_T tkl_system_sleep(uint32_t num_ms)
 *
 * @return void
 */
-VOID_T tkl_system_delay(uint32_t num_ms)
+void tkl_system_delay(uint32_t num_ms)
 {
     // --- BEGIN: user implements ---
     return ;

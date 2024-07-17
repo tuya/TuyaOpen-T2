@@ -17,7 +17,7 @@
     extern "C" {
 #endif
 
-typedef VOID_T* TKL_SYMMETRY_HANDLE;
+typedef void* TKL_SYMMETRY_HANDLE;
 
 /**
 * @brief This function Create&initializes a aes context.

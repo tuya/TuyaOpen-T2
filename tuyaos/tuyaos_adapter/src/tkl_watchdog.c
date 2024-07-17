@@ -43,7 +43,7 @@ uint32_t tkl_watchdog_init(TUYA_WDOG_BASE_CFG_T *cfg)
  * 
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_watchdog_deinit(VOID_T)
+OPERATE_RET tkl_watchdog_deinit(void)
 {
     // --- BEGIN: user implements ---
     bk_wdg_finalize();
@@ -58,7 +58,7 @@ OPERATE_RET tkl_watchdog_deinit(VOID_T)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_watchdog_refresh(VOID_T)
+OPERATE_RET tkl_watchdog_refresh(void)
 {
     // --- BEGIN: user implements ---
     bk_wdg_reload();

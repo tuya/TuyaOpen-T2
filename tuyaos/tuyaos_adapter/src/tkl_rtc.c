@@ -21,7 +21,7 @@
  *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_rtc_init(VOID_T)
+OPERATE_RET tkl_rtc_init(void)
 {
     // --- BEGIN: user implements ---
     return OPRT_COM_ERROR;
@@ -33,7 +33,7 @@ OPERATE_RET tkl_rtc_init(VOID_T)
  * @param[in] none
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_rtc_deinit(VOID_T)
+OPERATE_RET tkl_rtc_deinit(void)
 {
     // --- BEGIN: user implements ---
     return OPRT_COM_ERROR;

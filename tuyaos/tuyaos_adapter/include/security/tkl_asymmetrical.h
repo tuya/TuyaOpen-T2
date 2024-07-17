@@ -17,7 +17,7 @@
     extern "C" {
 #endif
 
-typedef VOID_T* TKL_ASYMMETRICAY_HANDLE;
+typedef void* TKL_ASYMMETRICAY_HANDLE;
 
 /**
 * @brief This function Create&initializes a rsa context.

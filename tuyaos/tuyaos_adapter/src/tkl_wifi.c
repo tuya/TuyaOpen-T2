@@ -43,8 +43,8 @@ typedef struct {
 }wifi_mgnt_frame;
 
 typedef struct{
-    SCHAR_T ssid[33];
-    SCHAR_T passwd[64];
+    int8_t ssid[33];
+    int8_t passwd[64];
 }FAST_WF_CONNECTED_AP_INFO_V2_T;
 
 static WF_WK_MD_E wf_mode = WWM_POWERDOWN; 
@@ -344,7 +344,7 @@ OPERATE_RET tkl_wifi_init(WIFI_EVENT_CB cb)
  *
  * @note if ssid == NULL means scan all ap, otherwise means scan the specific ssid
  */
-OPERATE_RET tkl_wifi_scan_ap(const SCHAR_T *ssid, AP_IF_S **ap_ary, uint32_t *num)
+OPERATE_RET tkl_wifi_scan_ap(const int8_t *ssid, AP_IF_S **ap_ary, uint32_t *num)
 {
     // --- BEGIN: user implements ---
     if(first_set_flag) {
@@ -537,7 +537,7 @@ OPERATE_RET tkl_wifi_start_ap(const WF_AP_CFG_IF_S *cfg)
  * 
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_stop_ap(VOID_T)
+OPERATE_RET tkl_wifi_stop_ap(void)
 {
     // --- BEGIN: user implements ---
     bk_wlan_stop(SOFT_AP);
@@ -551,7 +551,7 @@ OPERATE_RET tkl_wifi_stop_ap(VOID_T)
  * @param[in]       chan        the channel to set
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_set_cur_channel(const UCHAR_T chan)
+OPERATE_RET tkl_wifi_set_cur_channel(const uint8_t chan)
 {
     // --- BEGIN: user implements ---
    int status;
@@ -586,7 +586,7 @@ OPERATE_RET tkl_wifi_set_cur_channel(const UCHAR_T chan)
  * @param[out]      chan        the channel wifi works
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_get_cur_channel(UCHAR_T *chan)
+OPERATE_RET tkl_wifi_get_cur_channel(uint8_t *chan)
 {
     // --- BEGIN: user implements ---
     *chan = (unsigned char)bk_wlan_get_channel();  
@@ -777,7 +777,7 @@ OPERATE_RET tkl_wifi_get_connected_ap_info(FAST_WF_CONNECTED_AP_INFO_T **fast_ap
  * @param[out]      mac         uplink mac
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_get_bssid(UCHAR_T *mac)
+OPERATE_RET tkl_wifi_get_bssid(uint8_t *mac)
 {
     // --- BEGIN: user implements ---
     int ret = OPRT_OK;
@@ -831,7 +831,7 @@ OPERATE_RET tkl_wifi_set_country_code(const COUNTRY_CODE_E ccode)
  *
  * @return true on success. faile on failure
  */
-BOOL_T tkl_wifi_set_rf_calibrated(VOID_T)
+BOOL_T tkl_wifi_set_rf_calibrated(void)
 {
     // --- BEGIN: user implements ---
     int stat = manual_cal_rfcali_status();
@@ -851,7 +851,7 @@ BOOL_T tkl_wifi_set_rf_calibrated(VOID_T)
  * @param[in]       dtim     the wifi dtim
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_set_lp_mode(const BOOL_T enable, const UCHAR_T dtim)
+OPERATE_RET tkl_wifi_set_lp_mode(const BOOL_T enable, const uint8_t dtim)
 {
     // --- BEGIN: user implements ---
     if(TRUE == enable) {
@@ -920,7 +920,7 @@ OPERATE_RET tkl_wifi_station_fast_connect(const FAST_WF_CONNECTED_AP_INFO_T *fas
  * @param[in]       passwd
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_station_connect(const SCHAR_T *ssid, const SCHAR_T *passwd)
+OPERATE_RET tkl_wifi_station_connect(const int8_t *ssid, const int8_t *passwd)
 {
     // --- BEGIN: user implements ---
     int ret = OPRT_COM_ERROR;
@@ -952,7 +952,7 @@ OPERATE_RET tkl_wifi_station_connect(const SCHAR_T *ssid, const SCHAR_T *passwd)
  * 
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_station_disconnect(VOID_T)
+OPERATE_RET tkl_wifi_station_disconnect(void)
 {
     // --- BEGIN: user implements ---
     //bk_wlan_stop(STATION); /* ����Ҫʵ�֣�������start��һ��ʼ�ͻ�ֹͣ */
@@ -966,12 +966,12 @@ OPERATE_RET tkl_wifi_station_disconnect(VOID_T)
  * @param[out]      rssi        the return rssi
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_station_get_conn_ap_rssi(SCHAR_T *rssi)
+OPERATE_RET tkl_wifi_station_get_conn_ap_rssi(int8_t *rssi)
 {
     // --- BEGIN: user implements ---
     int ret = OPRT_OK;
-    SHORT_T tmp_rssi = 0, sum_rssi = 0;
-    SCHAR_T max_rssi = -128, min_rssi = 127;
+    int16_t tmp_rssi = 0, sum_rssi = 0;
+    int8_t max_rssi = -128, min_rssi = 127;
     LinkStatusTypeDef sta = {0};
     int i = 0, error_cnt = 0;
 
@@ -1074,7 +1074,7 @@ OPERATE_RET tkl_wifi_station_get_status(WF_STATION_STAT_E *stat)
  * @param[in]       len         length of buffer
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_send_mgnt(const UCHAR_T *buf, const uint32_t len)
+OPERATE_RET tkl_wifi_send_mgnt(const uint8_t *buf, const uint32_t len)
 {
     // --- BEGIN: user implements ---
     int ret = bk_wlan_send_80211_raw_frame((unsigned char *)buf, len);

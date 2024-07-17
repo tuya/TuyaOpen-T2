@@ -22,7 +22,7 @@ extern "C" {
  * @param[in]   none
  * @return  irq mask
  */
-uint32_t tkl_system_enter_critical(VOID_T);
+uint32_t tkl_system_enter_critical(void);
 
 /**
  * @brief system exit critical
@@ -30,7 +30,7 @@ uint32_t tkl_system_enter_critical(VOID_T);
  * @param[in]   irq_mask: irq mask 
  * @return  none
  */
-VOID_T tkl_system_exit_critical(uint32_t irq_mask);
+void tkl_system_exit_critical(uint32_t irq_mask);
 
 /**
  * @brief enter critical macro
@@ -54,7 +54,7 @@ VOID_T tkl_system_exit_critical(uint32_t irq_mask);
 *
 * @return none
 */
-VOID_T tkl_system_reset(VOID_T);
+void tkl_system_reset(void);
 
 /**
 * @brief Get system tick count
@@ -63,7 +63,7 @@ VOID_T tkl_system_reset(VOID_T);
 *
 * @return system tick count
 */
-SYS_TICK_T tkl_system_get_tick_count(VOID_T);
+SYS_TICK_T tkl_system_get_tick_count(void);
 
 /**
 * @brief Get system millisecond
@@ -72,7 +72,7 @@ SYS_TICK_T tkl_system_get_tick_count(VOID_T);
 *
 * @return system millisecond
 */
-SYS_TIME_T tkl_system_get_millisecond(VOID_T);
+SYS_TIME_T tkl_system_get_millisecond(void);
 
 /**
 * @brief Get system random data
@@ -90,7 +90,7 @@ int32_t tkl_system_get_random(uint32_t range);
 *
 * @return reset reason
 */
-TUYA_RESET_REASON_E tkl_system_get_reset_reason(CHAR_T** describe);
+TUYA_RESET_REASON_E tkl_system_get_reset_reason(char** describe);
 
 /**
 * @brief  system sleep
@@ -99,7 +99,7 @@ TUYA_RESET_REASON_E tkl_system_get_reset_reason(CHAR_T** describe);
 *
 * @return none
 */
-VOID_T tkl_system_sleep(uint32_t num_ms);
+void tkl_system_sleep(uint32_t num_ms);
 
 
 /**
@@ -111,7 +111,7 @@ VOID_T tkl_system_sleep(uint32_t num_ms);
 *
 * @return void
 */
-VOID_T tkl_system_delay(uint32_t num_ms);
+void tkl_system_delay(uint32_t num_ms);
 
 /**
 * @brief get system cpu info

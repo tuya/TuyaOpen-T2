@@ -26,7 +26,7 @@ extern "C" {
 *
 * @return 
 */
-VOID_T tkl_log_output(const CHAR_T *format, ...);
+void tkl_log_output(const char *format, ...);
 
 /**
 * @brief Close log port
@@ -37,7 +37,7 @@ VOID_T tkl_log_output(const CHAR_T *format, ...);
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_log_close(VOID_T);
+OPERATE_RET tkl_log_close(void);
 
 /**
 * @brief Open log port
@@ -48,7 +48,7 @@ OPERATE_RET tkl_log_close(VOID_T);
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_log_open(VOID_T);
+OPERATE_RET tkl_log_open(void);
 
 #ifdef __cplusplus
 }

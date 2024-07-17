@@ -23,7 +23,7 @@
  * 
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_multi_io_pinmux_config(TUYA_MUL_PIN_CFG_T *cfg, UINT16_T num)
+OPERATE_RET tkl_multi_io_pinmux_config(TUYA_MUL_PIN_CFG_T *cfg, uint16_t num)
 {
     // --- BEGIN: user implements ---
     return OPRT_NOT_SUPPORTED;

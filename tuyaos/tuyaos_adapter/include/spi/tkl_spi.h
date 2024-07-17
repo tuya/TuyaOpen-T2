@@ -45,7 +45,7 @@ OPERATE_RET tkl_spi_deinit(TUYA_SPI_NUM_E port);
  *
  * @return  OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_spi_send(TUYA_SPI_NUM_E port, VOID_T *data, UINT16_T size);
+OPERATE_RET tkl_spi_send(TUYA_SPI_NUM_E port, void *data, uint16_t size);
 
 /**
  * spi_recv
@@ -56,7 +56,7 @@ OPERATE_RET tkl_spi_send(TUYA_SPI_NUM_E port, VOID_T *data, UINT16_T size);
  *
  * @return  OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_spi_recv(TUYA_SPI_NUM_E port, VOID_T *data, UINT16_T size);
+OPERATE_RET tkl_spi_recv(TUYA_SPI_NUM_E port, void *data, uint16_t size);
 
 /**
  * @brief spi transfer
@@ -68,7 +68,7 @@ OPERATE_RET tkl_spi_recv(TUYA_SPI_NUM_E port, VOID_T *data, UINT16_T size);
  * 
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_spi_transfer(TUYA_SPI_NUM_E port, VOID_T* send_buf, VOID_T* receive_buf, uint32_t length);
+OPERATE_RET tkl_spi_transfer(TUYA_SPI_NUM_E port, void* send_buf, void* receive_buf, uint32_t length);
 
 /**
  * @brief adort spi transfer,or spi send, or spi recv

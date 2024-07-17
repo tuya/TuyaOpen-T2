@@ -55,7 +55,7 @@ SMARTPOINTER_T *tuya_smartpointer_create(void *data, const uint32_t data_len, co
     SP_CREATE_LOCK(sp_data);
 
     if (TRUE == malk) {
-        sp_data->data = (BYTE_T *)sp_data + sizeof(SMARTPOINTER_T);
+        sp_data->data = (uint8_t *)sp_data + sizeof(SMARTPOINTER_T);
         memcpy(sp_data->data,data,data_len);
     } else {
         sp_data->data = data;
@@ -73,7 +73,7 @@ SMARTPOINTER_T *tuya_smartpointer_create(void *data, const uint32_t data_len, co
  * @param[inout] sp_data the reference data
  * @return void 
  */
-VOID_T tuya_smartpointer_get(SMARTPOINTER_T *sp_data)
+void tuya_smartpointer_get(SMARTPOINTER_T *sp_data)
 {
     if (NULL == sp_data) {
         return;
@@ -94,7 +94,7 @@ VOID_T tuya_smartpointer_get(SMARTPOINTER_T *sp_data)
  * 
  * @note the reference data will be released when reference is 0
  */
-VOID_T tuya_smartpointer_put(SMARTPOINTER_T *sp_data)
+void tuya_smartpointer_put(SMARTPOINTER_T *sp_data)
 {
     if (NULL == sp_data) {
         return;
@@ -121,7 +121,7 @@ VOID_T tuya_smartpointer_put(SMARTPOINTER_T *sp_data)
  * @param[inout] sp_data the reference data 
  * @return void 
  */
-VOID_T tuya_smartpointer_del(SMARTPOINTER_T *sp_data)
+void tuya_smartpointer_del(SMARTPOINTER_T *sp_data)
 {
     SP_RELEASE_LOCK(sp_data);
 

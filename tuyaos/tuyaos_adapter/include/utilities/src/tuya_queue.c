@@ -36,7 +36,7 @@ typedef enum {
 
 typedef struct {
     LIST_HEAD node;
-    UCHAR_T data[];
+    uint8_t data[];
 }QUEUE_ITEM_T;
 
 typedef struct {
@@ -51,7 +51,7 @@ typedef struct {
     LIST_HEAD head;
 }TUYA_QUEUE_T;
 
-static OPERATE_RET __enqueue(TUYA_QUEUE_HANDLE handle, const VOID_T *item, ENQUEUE_POLICY_E policy)
+static OPERATE_RET __enqueue(TUYA_QUEUE_HANDLE handle, const void *item, ENQUEUE_POLICY_E policy)
 {
     OPERATE_RET op_ret = OPRT_OK;
 
@@ -67,7 +67,7 @@ static OPERATE_RET __enqueue(TUYA_QUEUE_HANDLE handle, const VOID_T *item, ENQUE
     }
 
     INIT_LIST_HEAD(&(queue_item->node));
-    memcpy(queue_item->data, (VOID_T *)item, queue->item_size);
+    memcpy(queue_item->data, (void *)item, queue->item_size);
 
     QUEUE_LOCK(queue);
     if(queue->queue_free > 0) {
@@ -136,7 +136,7 @@ OPERATE_RET tuya_queue_create(const uint32_t queue_len, const uint32_t item_size
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
+OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const void *item)
 {
     return __enqueue(handle, item, POLICY_SEND_TO_BACK);
 }
@@ -149,7 +149,7 @@ OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
+OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const void *item)
 {
     return __enqueue(handle, item, POLICY_SEND_TO_FRONT);
 }
@@ -162,7 +162,7 @@ OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const VOID_T *ite
  *
  * @return OPRT_OK on success, others on failed, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
+OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const void *item)
 {
     OPERATE_RET op_ret = OPRT_OK;
 
@@ -176,7 +176,7 @@ OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
     if(queue->queue_free < queue->queue_len) {
         QUEUE_ITEM_T *queue_item = tuya_list_entry(queue->head.next, QUEUE_ITEM_T, node);
         if(item) {
-            memcpy((VOID_T *)item, queue_item->data, queue->item_size);
+            memcpy((void *)item, queue_item->data, queue->item_size);
         }
         tuya_list_del(&(queue_item->node));
         tkl_system_free(queue_item);
@@ -197,7 +197,7 @@ OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
+OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const void *item)
 {
     OPERATE_RET op_ret = OPRT_OK;
 
@@ -210,7 +210,7 @@ OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
     QUEUE_LOCK(queue);
     if(queue->queue_free < queue->queue_len) {
         QUEUE_ITEM_T *queue_item = tuya_list_entry(queue->head.next, QUEUE_ITEM_T, node);
-        memcpy((VOID_T *)item, queue_item->data, queue->item_size);
+        memcpy((void *)item, queue_item->data, queue->item_size);
     } else {
         op_ret = OPRT_NOT_FOUND;
     }
@@ -226,7 +226,7 @@ OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const VOID_T *item)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_traverse(TUYA_QUEUE_HANDLE handle, TRAVERSE_CB cb, VOID_T *ctx)
+OPERATE_RET tuya_queue_traverse(TUYA_QUEUE_HANDLE handle, TRAVERSE_CB cb, void *ctx)
 {
     if(NULL == handle || NULL == cb) {
         return OPRT_INVALID_PARM;
@@ -288,7 +288,7 @@ OPERATE_RET tuya_queue_clear(TUYA_QUEUE_HANDLE handle)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_get_batch(TUYA_QUEUE_HANDLE handle, const uint32_t start, VOID_T *items, const uint32_t num)
+OPERATE_RET tuya_queue_get_batch(TUYA_QUEUE_HANDLE handle, const uint32_t start, void *items, const uint32_t num)
 {
     if(NULL == handle || NULL == items || 0 == num) {
         return OPRT_INVALID_PARM;
@@ -312,7 +312,7 @@ OPERATE_RET tuya_queue_get_batch(TUYA_QUEUE_HANDLE handle, const uint32_t start,
         }
 
         queue_item = tuya_list_entry(p, QUEUE_ITEM_T, node);
-        memcpy((UCHAR_T*)items + count * queue->item_size, queue_item->data, queue->item_size);
+        memcpy((uint8_t*)items + count * queue->item_size, queue_item->data, queue->item_size);
         count++;
     }
     QUEUE_UNLOCK(queue);

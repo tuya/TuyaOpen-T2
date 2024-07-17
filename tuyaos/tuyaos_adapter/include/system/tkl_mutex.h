@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-typedef VOID_T* TKL_MUTEX_HANDLE;
+typedef void* TKL_MUTEX_HANDLE;
 
 /**
 * @brief Create mutex

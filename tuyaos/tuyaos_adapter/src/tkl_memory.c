@@ -24,7 +24,7 @@
 *
 * @return the memory address malloced
 */
-VOID_T *tkl_system_malloc(SIZE_T size)
+void *tkl_system_malloc(size_t size)
 {
     // --- BEGIN: user implements ---
     return os_malloc(size);
@@ -38,9 +38,9 @@ VOID_T *tkl_system_malloc(SIZE_T size)
 *
 * @note This API is used to free memory of system.
 *
-* @return VOID_T
+* @return void
 */
-VOID_T tkl_system_free(VOID_T* ptr)
+void tkl_system_free(void* ptr)
 {
     // --- BEGIN: user implements ---
     os_free(ptr);
@@ -55,7 +55,7 @@ VOID_T tkl_system_free(VOID_T* ptr)
  *
  * @return the memory address calloced
  */
-VOID_T *tkl_system_calloc(size_t nitems, size_t size)
+void *tkl_system_calloc(size_t nitems, size_t size)
 {
     // --- BEGIN: user implements ---
 	if (size && nitems > (~(size_t) 0) / size)
@@ -70,9 +70,9 @@ VOID_T *tkl_system_calloc(size_t nitems, size_t size)
  * @param[in]       nitems      source memory address
  * @param[in]       size        the size after re-allocate
  *
- * @return VOID_T
+ * @return void
  */
-VOID_T *tkl_system_realloc(VOID_T* ptr, size_t size)
+void *tkl_system_realloc(void* ptr, size_t size)
 {
     // --- BEGIN: user implements ---
     return os_realloc(ptr, size);
@@ -86,7 +86,7 @@ VOID_T *tkl_system_realloc(VOID_T* ptr, size_t size)
 *
 * @return heap size
 */
-int32_t tkl_system_get_free_heap_size(VOID_T)
+int32_t tkl_system_get_free_heap_size(void)
 {
     /*
      * ble assert 时会通过bk_ble_mem_assert_type_cb返回对应的asser reason， 通过这个回调判断当前是否出现ble assert。

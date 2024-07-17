@@ -39,7 +39,7 @@ OPERATE_RET tkl_cpu_sleep_callback_register(TUYA_SLEEP_CB_T *sleep_cb)
  *
  * @return none
  */
-VOID_T tkl_cpu_allow_sleep(VOID_T)
+void tkl_cpu_allow_sleep(void)
 {
     // --- BEGIN: user implements ---
     return ;
@@ -53,7 +53,7 @@ VOID_T tkl_cpu_allow_sleep(VOID_T)
  *
  * @return none
  */
-VOID_T tkl_cpu_force_wakeup(VOID_T)
+void tkl_cpu_force_wakeup(void)
 {
     // --- BEGIN: user implements ---
     return ;

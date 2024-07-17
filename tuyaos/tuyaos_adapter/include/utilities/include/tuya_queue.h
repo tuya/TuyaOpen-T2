@@ -16,8 +16,8 @@
 
 #include "tuya_cloud_types.h"
 
-typedef VOID_T* TUYA_QUEUE_HANDLE;
-typedef BOOL_T (*TRAVERSE_CB)(VOID_T*item, VOID_T *ctx);
+typedef void* TUYA_QUEUE_HANDLE;
+typedef BOOL_T (*TRAVERSE_CB)(void*item, void *ctx);
 
 /**
  * @brief create and initialize a queue (FIFO)
@@ -40,7 +40,7 @@ OPERATE_RET tuya_queue_create(const uint32_t queue_len, const uint32_t item_size
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
+OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const void *item);
 
 /**
  * @brief enqueue, insert to the head
@@ -50,7 +50,7 @@ OPERATE_RET tuya_queue_input(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
+OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const void *item);
 
 /**
  * @brief dequeue
@@ -60,7 +60,7 @@ OPERATE_RET tuya_queue_input_instant(TUYA_QUEUE_HANDLE handle, const VOID_T *ite
  *
  * @return OPRT_OK on success, others on failed, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
+OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const void *item);
 
 /**
  * @brief get the peek item(not dequeue)
@@ -70,7 +70,7 @@ OPERATE_RET tuya_queue_output(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
+OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const void *item);
 
 /**
  * @brief traverse the queue with specific callback
@@ -81,7 +81,7 @@ OPERATE_RET tuya_queue_peek(TUYA_QUEUE_HANDLE handle, const VOID_T *item);
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h 
  */
-OPERATE_RET tuya_queue_traverse(TUYA_QUEUE_HANDLE handle, TRAVERSE_CB cb, VOID_T *ctx);
+OPERATE_RET tuya_queue_traverse(TUYA_QUEUE_HANDLE handle, TRAVERSE_CB cb, void *ctx);
 
 /**
  * @brief clear all items in the queue
@@ -102,7 +102,7 @@ OPERATE_RET tuya_queue_clear(TUYA_QUEUE_HANDLE handle);
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tuya_queue_get_batch(TUYA_QUEUE_HANDLE handle, const uint32_t start, VOID_T *items, const uint32_t num);
+OPERATE_RET tuya_queue_get_batch(TUYA_QUEUE_HANDLE handle, const uint32_t start, void *items, const uint32_t num);
 
 /**
  * @brief delete the item from the queue position

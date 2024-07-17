@@ -27,7 +27,7 @@ typedef struct {
     BOOL_T malk;
     uint32_t rfc;
     uint32_t data_len;
-    VOID_T *data;
+    void *data;
 }SMARTPOINTER_T;
 
 /**
@@ -47,7 +47,7 @@ SMARTPOINTER_T *tuya_smartpointer_create(void *data, const uint32_t data_len, co
  * @param[inout] sp_data the reference data
  * @return void 
  */
-VOID_T tuya_smartpointer_get(SMARTPOINTER_T *sp_data);
+void tuya_smartpointer_get(SMARTPOINTER_T *sp_data);
 
 /**
  * @brief put the reference data, decrease the reference
@@ -57,7 +57,7 @@ VOID_T tuya_smartpointer_get(SMARTPOINTER_T *sp_data);
  * 
  * @note the reference data will be released when reference is 0
  */
-VOID_T tuya_smartpointer_put(SMARTPOINTER_T *sp_data);
+void tuya_smartpointer_put(SMARTPOINTER_T *sp_data);
 
 /**
  * @brief delete the reference data, ignore the reference
@@ -65,7 +65,7 @@ VOID_T tuya_smartpointer_put(SMARTPOINTER_T *sp_data);
  * @param[inout] sp_data the reference data 
  * @return void 
  */
-VOID_T tuya_smartpointer_del(SMARTPOINTER_T *sp_data);
+void tuya_smartpointer_del(SMARTPOINTER_T *sp_data);
 
 #ifdef __cplusplus
 }

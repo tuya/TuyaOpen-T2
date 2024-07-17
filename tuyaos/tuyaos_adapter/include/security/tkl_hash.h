@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 
-typedef VOID_T* TKL_HASH_HANDLE;
+typedef void* TKL_HASH_HANDLE;
                 
 
 /**

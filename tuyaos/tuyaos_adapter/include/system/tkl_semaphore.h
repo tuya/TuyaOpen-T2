@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-typedef VOID_T* TKL_SEM_HANDLE;
+typedef void* TKL_SEM_HANDLE;
 #define TKL_SEM_WAIT_FOREVER 0xFFFFffff
 
 /**

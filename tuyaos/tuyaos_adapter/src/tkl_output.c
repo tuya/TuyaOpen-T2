@@ -21,7 +21,7 @@ extern void bk_printf(const char *fmt, ...);
 #define MAX_SIZE_OF_DEBUG_BUF (1024)
 #endif
 
-static CHAR_T s_output_buf[MAX_SIZE_OF_DEBUG_BUF] = {0};
+static char s_output_buf[MAX_SIZE_OF_DEBUG_BUF] = {0};
 #endif
 
 /**
@@ -33,7 +33,7 @@ static CHAR_T s_output_buf[MAX_SIZE_OF_DEBUG_BUF] = {0};
 *
 * @return 
 */
-VOID_T tkl_log_output(const CHAR_T *format, ...)
+void tkl_log_output(const char *format, ...)
 {
     // --- BEGIN: user implements ---
     if (format == NULL) {
@@ -62,7 +62,7 @@ VOID_T tkl_log_output(const CHAR_T *format, ...)
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_log_close(VOID_T)
+OPERATE_RET tkl_log_close(void)
 {
     // --- BEGIN: user implements ---
     return OPRT_OK;
@@ -78,7 +78,7 @@ OPERATE_RET tkl_log_close(VOID_T)
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_log_open(VOID_T)
+OPERATE_RET tkl_log_open(void)
 {
     // --- BEGIN: user implements ---
     return OPRT_OK;

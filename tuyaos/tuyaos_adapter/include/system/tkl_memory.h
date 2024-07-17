@@ -25,7 +25,7 @@ extern "C" {
 *
 * @return the memory address malloced
 */
-VOID_T *tkl_system_malloc(SIZE_T size);
+void *tkl_system_malloc(size_t size);
 
 /**
 * @brief Free memory of system
@@ -34,9 +34,9 @@ VOID_T *tkl_system_malloc(SIZE_T size);
 *
 * @note This API is used to free memory of system.
 *
-* @return VOID_T
+* @return void
 */
-VOID_T tkl_system_free(VOID_T* ptr);
+void tkl_system_free(void* ptr);
 
 /**
  * @brief Allocate and clear the memory
@@ -46,7 +46,7 @@ VOID_T tkl_system_free(VOID_T* ptr);
  *
  * @return the memory address calloced
  */
-VOID_T *tkl_system_calloc(size_t nitems, size_t size);
+void *tkl_system_calloc(size_t nitems, size_t size);
 
 /**
  * @brief Re-allocate the memory
@@ -54,9 +54,9 @@ VOID_T *tkl_system_calloc(size_t nitems, size_t size);
  * @param[in]       nitems      source memory address
  * @param[in]       size        the size after re-allocate
  *
- * @return VOID_T
+ * @return void
  */
-VOID_T *tkl_system_realloc(VOID_T* ptr, size_t size);
+void *tkl_system_realloc(void* ptr, size_t size);
 
 /**
 * @brief Get system free heap size
@@ -65,7 +65,7 @@ VOID_T *tkl_system_realloc(VOID_T* ptr, size_t size);
 *
 * @return heap size
 */
-int32_t tkl_system_get_free_heap_size(VOID_T);
+int32_t tkl_system_get_free_heap_size(void);
 
 #ifdef __cplusplus
 }

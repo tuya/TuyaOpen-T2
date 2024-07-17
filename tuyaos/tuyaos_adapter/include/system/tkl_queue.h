@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #define TKL_QUEUE_WAIT_FROEVER 0xFFFFFFFF
-typedef VOID_T* TKL_QUEUE_HANDLE;
+typedef void* TKL_QUEUE_HANDLE;
 
 
 
@@ -41,7 +41,7 @@ OPERATE_RET tkl_queue_create_init(TKL_QUEUE_HANDLE *queue, int32_t msgsize, int3
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_queue_post(const TKL_QUEUE_HANDLE queue, VOID_T *data, uint32_t timeout);
+OPERATE_RET tkl_queue_post(const TKL_QUEUE_HANDLE queue, void *data, uint32_t timeout);
 
 /**
  * @brief fetch message from the message queue
@@ -52,16 +52,16 @@ OPERATE_RET tkl_queue_post(const TKL_QUEUE_HANDLE queue, VOID_T *data, uint32_t 
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_queue_fetch(const TKL_QUEUE_HANDLE queue, VOID_T *msg, uint32_t timeout);
+OPERATE_RET tkl_queue_fetch(const TKL_QUEUE_HANDLE queue, void *msg, uint32_t timeout);
 
 /**
  * @brief free the message queue
  *
  * @param[in] queue the message queue handle
  *
- * @return VOID_T
+ * @return void
  */
-VOID_T tkl_queue_free(const TKL_QUEUE_HANDLE queue);
+void tkl_queue_free(const TKL_QUEUE_HANDLE queue);
 
 #ifdef __cplusplus
 }

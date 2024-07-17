@@ -87,7 +87,7 @@ heap_t MinHeapReplace(heap_t *heap, size_t heap_size, heap_t x) {
 }
 
 
-static UCHAR_T read_single_flag = FALSE;
+static uint8_t read_single_flag = FALSE;
 //extern size_t MinHeapInsert(heap_t *heap, size_t heap_size, heap_t x);
 //extern heap_t MinHeapReplace(heap_t *heap, size_t heap_size, heap_t x);
 // --- END: user defines and implements ---
@@ -190,7 +190,7 @@ uint32_t tkl_adc_ref_voltage_get(TUYA_ADC_NUM_E port_num)
  *
  * @return temperature(bat: 'C)
  */
-int32_t tkl_adc_temperature_get(VOID_T)
+int32_t tkl_adc_temperature_get(void)
 {
     // --- BEGIN: user implements ---
     return OPRT_NOT_SUPPORTED;
@@ -206,7 +206,7 @@ int32_t tkl_adc_temperature_get(VOID_T)
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_adc_read_data(TUYA_ADC_NUM_E port_num, int32_t *buff, UINT16_T len)
+OPERATE_RET tkl_adc_read_data(TUYA_ADC_NUM_E port_num, int32_t *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     OPERATE_RET ret = OPRT_OK;
@@ -247,7 +247,7 @@ OPERATE_RET tkl_adc_read_single_channel(TUYA_ADC_NUM_E port_num, uint8_t ch_id, 
     // --- BEGIN: user implements ---
     signed char i = 0;
     unsigned int status;
-    UCHAR_T data_buff_size = 0;
+    uint8_t data_buff_size = 0;
     uint32_t sum = 0;
     uint32_t index;
     int adc_hdl;
@@ -354,7 +354,7 @@ OPERATE_RET tkl_adc_read_single_channel(TUYA_ADC_NUM_E port_num, uint8_t ch_id, 
  *
  */
 
-OPERATE_RET tkl_adc_read_voltage(TUYA_ADC_NUM_E port_num, int32_t *buff, UINT16_T len)
+OPERATE_RET tkl_adc_read_voltage(TUYA_ADC_NUM_E port_num, int32_t *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     OPERATE_RET ret = OPRT_COM_ERROR;

@@ -89,10 +89,10 @@ OPERATE_RET tkl_hci_reset(void)
  *          OpCode(OCF+OGF) + Parameter Total Length + Parameter 0 ... + Parameter N
  * @Note    The OpCode Group Field (OGF), OpCode Command Field (OCF). 
  * */
-OPERATE_RET tkl_hci_cmd_packet_send(const UCHAR_T *p_buf, USHORT_T buf_len)
+OPERATE_RET tkl_hci_cmd_packet_send(const uint8_t *p_buf, uint16_t buf_len)
 {
     // --- BEGIN: user implements ---
-    return hci_driver_send(HCI_CMD_MSG_TYPE, buf_len, (UCHAR_T *)p_buf);
+    return hci_driver_send(HCI_CMD_MSG_TYPE, buf_len, (uint8_t *)p_buf);
     // --- END: user implements ---
 }
 
@@ -115,10 +115,10 @@ OPERATE_RET tkl_hci_cmd_packet_send(const UCHAR_T *p_buf, USHORT_T buf_len)
  *          (Connection Handle + PB Flag(12-14bit) + PC Flag(14-16bit)) + Data Total Length + Data
  * @Note    PB Flag: Packet_Boundary_Flag; PB Flag: Broadcast_Flag;
  * */
-OPERATE_RET tkl_hci_acl_packet_send(const UCHAR_T *p_buf, USHORT_T buf_len)
+OPERATE_RET tkl_hci_acl_packet_send(const uint8_t *p_buf, uint16_t buf_len)
 {
     // --- BEGIN: user implements ---
-    return hci_driver_send(HCI_ACL_MSG_TYPE, buf_len, (UCHAR_T *)p_buf);
+    return hci_driver_send(HCI_ACL_MSG_TYPE, buf_len, (uint8_t *)p_buf);
     // --- END: user implements ---
 }
 
