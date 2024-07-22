@@ -10,7 +10,7 @@ ECHO = echo
 endif
 
 GIT_VERSION := $(shell git describe --tags --dirty=-Dev)
-ARM_GCC_TOOLCHAIN = ../gcc-arm-none-eabi-10.3-2021.10/bin
+ARM_GCC_TOOLCHAIN = ../../tools/gcc-arm-none-eabi-10.3-2021.10/bin
 
 CROSS_COMPILE = $(ARM_GCC_TOOLCHAIN)/arm-none-eabi-
 .config: beken378/app/config/sys_config.h

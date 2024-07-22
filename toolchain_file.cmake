@@ -1,26 +1,12 @@
-##
-# @file board.cmake
-# @brief 
-#/
 
-# 设置目标系统
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR Linux)
 
-# 设置工具链目录
-set(TOOLCHAIN_DIR "${PLATFORM_PATH}/gcc-arm-none-eabi-10.3-2021.10")
+set(TOOLCHAIN_DIR "${PLATFORM_PATH}/../tools/gcc-arm-none-eabi-10.3-2021.10")
 set(TOOLCHAIN_PRE "arm-none-eabi-")
-
-# set(TOOLCHAIN_INCLUDE
-#     ${TOOLCHAIN_DIR}/include
-#     )
-# set(TOOLCHAIN_LIB
-#     ${TOOLCHAIN_DIR}/lib/gcc
-#     )
 
 message(STATUS "[TOP] PLATFORM_PATH: ${PLATFORM_PATH}")
 
-# 设置编译器位置
 execute_process(COMMAND uname -s OUTPUT_VARIABLE OS_NAME ERROR_VARIABLE error)
 message(STATUS "OS: ${OS_NAME}")
 
@@ -38,24 +24,6 @@ endif()
 SET (CMAKE_C_COMPILER_WORKS 1)
 SET (CMAKE_CXX_COMPILER_WORKS 1)
 
-# 设置Cmake查找主路径
 set(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN_DIR}/bin)
 
-# set(CMAKE_INCLUDE_PATH
-#     ${TOOLCHAIN_INCLUDE}
-#     )
-# set(CMAKE_LIBRARY_PATH
-#     ${TOOLCHAIN_LIB}
-#     )
-
-# 设置CFLAGS
 set(CMAKE_C_FLAGS "-g -mthumb -mcpu=arm968e-s -march=armv5te -mthumb-interwork -mlittle-endian -Os -std=c99 -ffunction-sections -Wall -fsigned-char -fdata-sections -Wunknown-pragmas -nostdlib -Wno-unused-function -Wno-unused-but-set-variable -Wno-format")
-
-
-# LIB_PUBLIC_INC
-# execute_process(
-#     COMMAND find ${PLATFORM_PATH}/tuyaos/tuyaos_adapter -type d
-#     OUTPUT_VARIABLE PLATFORM_PUBINC
-# )
-
-# string(REGEX REPLACE "\n" ";" PLATFORM_PUBINC "${PLATFORM_PUBINC}")

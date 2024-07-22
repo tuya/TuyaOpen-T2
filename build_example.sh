@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/bash
 # 参数说明：
 # $1 - example name: echo_app_top
 # $2 - example version: 1.0.0
@@ -9,7 +9,6 @@
 
 print_not_null()
 {
-    # $1 为空，返回错误
     if [ x"$1" = x"" ]; then
         return 1
     fi
@@ -71,7 +70,7 @@ if ! type make >/dev/null 2>&1; then
 	exit 1;
 fi
 
-TOOLCHAIN=gcc-arm-none-eabi-10.3-2021.10/bin
+TOOLCHAIN=../tools/gcc-arm-none-eabi-10.3-2021.10/bin
 export ARM_GCC_TOOLCHAIN=${TOOLCHAIN}
 
 GCC_VERSION=$(${TOOLCHAIN}/arm-none-eabi-gcc --version)
