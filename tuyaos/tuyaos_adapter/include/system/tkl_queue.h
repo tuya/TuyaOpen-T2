@@ -30,7 +30,7 @@ typedef void* TKL_QUEUE_HANDLE;
  *
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_queue_create_init(TKL_QUEUE_HANDLE *queue, int32_t msgsize, int32_t msgcount);
+OPERATE_RET tkl_queue_create_init(TKL_QUEUE_HANDLE *queue, int msgsize, int msgcount);
 
 /**
  * @brief post a message to the message queue

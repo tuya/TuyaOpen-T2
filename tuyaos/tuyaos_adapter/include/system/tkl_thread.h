@@ -108,7 +108,7 @@ OPERATE_RET tkl_thread_is_self(TKL_THREAD_HANDLE thread, BOOL_T* is_self);
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_thread_get_priority(TKL_THREAD_HANDLE thread, int32_t *priority);
+OPERATE_RET tkl_thread_get_priority(TKL_THREAD_HANDLE thread, int *priority);
 
 /**
 * @brief Set thread priority
@@ -120,7 +120,7 @@ OPERATE_RET tkl_thread_get_priority(TKL_THREAD_HANDLE thread, int32_t *priority)
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
-OPERATE_RET tkl_thread_set_priority(TKL_THREAD_HANDLE thread, int32_t priority);
+OPERATE_RET tkl_thread_set_priority(TKL_THREAD_HANDLE thread, int priority);
 
 /**
 * @brief Diagnose the thread(dump task stack, etc.)

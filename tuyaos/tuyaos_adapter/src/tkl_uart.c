@@ -142,7 +142,7 @@ OPERATE_RET tkl_uart_deinit(TUYA_UART_NUM_E port_id)
  *
  * @return return > 0: number of data written; return <= 0: write errror
  */
-int32_t tkl_uart_write(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
+int tkl_uart_write(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     extern void bk_send_byte(UINT8 uport, UINT8 data);
@@ -231,7 +231,7 @@ void tkl_uart_tx_irq_cb_reg(TUYA_UART_NUM_E port_id, TUYA_UART_IRQ_CB tx_cb)
  * 
  * @return return >= 0: number of data read; return < 0: read errror
  */
-int32_t tkl_uart_read(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
+int tkl_uart_read(TUYA_UART_NUM_E port_id, void *buff, uint16_t len)
 {
     // --- BEGIN: user implements ---
     bk_uart_t port;
@@ -314,7 +314,7 @@ OPERATE_RET tkl_uart_set_rx_flowctrl(TUYA_UART_NUM_E port_id, BOOL_T enable)
  *                        >0 : timeout in milliseconds
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_uart_wait_for_data(TUYA_UART_NUM_E port_id, int32_t timeout_ms)
+OPERATE_RET tkl_uart_wait_for_data(TUYA_UART_NUM_E port_id, int timeout_ms)
 {
     // --- BEGIN: user implements ---
     return OPRT_NOT_SUPPORTED;

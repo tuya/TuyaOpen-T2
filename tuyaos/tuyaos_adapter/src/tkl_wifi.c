@@ -101,9 +101,9 @@ static OPERATE_RET tkl_wifi_all_ap_scan(AP_IF_S **ap_ary, unsigned int *num)
     AP_IF_S *item;
     AP_IF_S *array = NULL;
     OPERATE_RET ret;
-    int32_t i;
-    int32_t scan_cnt;
-    int32_t ssid_len;
+    int i;
+    int scan_cnt;
+    int ssid_len;
     ScanResult_adv apList;
 
     if((NULL == ap_ary) || (NULL == num) || NULL != scanHandle) {
@@ -360,7 +360,7 @@ OPERATE_RET tkl_wifi_scan_ap(const int8_t *ssid, AP_IF_S **ap_ary, uint32_t *num
 
     AP_IF_S *array = NULL;
     OPERATE_RET ret;
-    int32_t i = 0, j = 0, ssid_len;
+    int i = 0, j = 0, ssid_len;
     ScanResult_adv apList;
 
     memset(&apList, 0, sizeof(ScanResult_adv));

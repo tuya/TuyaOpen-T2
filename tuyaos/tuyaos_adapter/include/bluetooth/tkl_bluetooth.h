@@ -160,7 +160,7 @@ OPERATE_RET tkl_ble_gap_conn_param_update(uint16_t conn_handle, TKL_BLE_GAP_CONN
  * @return  SUCCESS
  *          ERROR
  * */ 
-OPERATE_RET tkl_ble_gap_tx_power_set(uint8_t role, int32_t tx_power);
+OPERATE_RET tkl_ble_gap_tx_power_set(uint8_t role, int tx_power);
 
 /**
  * @brief   Get the received signal strength for the last connection event.

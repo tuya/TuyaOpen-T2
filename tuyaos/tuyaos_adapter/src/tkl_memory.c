@@ -86,7 +86,7 @@ void *tkl_system_realloc(void* ptr, size_t size)
 *
 * @return heap size
 */
-int32_t tkl_system_get_free_heap_size(void)
+int tkl_system_get_free_heap_size(void)
 {
     /*
      * ble assert 时会通过bk_ble_mem_assert_type_cb返回对应的asser reason， 通过这个回调判断当前是否出现ble assert。
@@ -97,7 +97,7 @@ int32_t tkl_system_get_free_heap_size(void)
         return 7000;
     } else {
         // --- BEGIN: user implements ---
-        return (int32_t)xPortGetFreeHeapSize();
+        return (int)xPortGetFreeHeapSize();
         // --- END: user implements ---
     }
     

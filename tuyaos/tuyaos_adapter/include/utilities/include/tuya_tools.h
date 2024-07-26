@@ -76,7 +76,7 @@ char *tuya_strcat(char* dst, const char* src);
  * 
  * @return 0 one equal, 1 on s1 longer than s2, -1 on s2 longer than s1
  */
-int32_t tuya_strncasecmp(const char *s1, const char *s2, size_t n);
+int tuya_strncasecmp(const char *s1, const char *s2, size_t n);
 
 /**
  * @brief compare characters of two string
@@ -86,7 +86,7 @@ int32_t tuya_strncasecmp(const char *s1, const char *s2, size_t n);
  * 
  * @return 0 one equal, 1 on s1 longer than s2, -1 on s2 longer than s1
  */
-int32_t tuya_strcmp(const char *src, const char *dst);
+int tuya_strcmp(const char *src, const char *dst);
 
 /**
  * @brief convert character to hex, if '0'-'f'/'F' -> 0-15, else 0
@@ -106,7 +106,7 @@ uint8_t tuya_asc2hex(char asccode);
  * 
  * @return none
  */
-void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int32_t srclen);
+void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int srclen);
 
 /**
  * @brief convert the input hex array to string array
@@ -118,7 +118,7 @@ void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int32_t srclen);
  * @return none
  * @note the size of <str> must >= hexlen * 2, convert example 00-ff -> "00"-"FF"
  */
-void tuya_hex2str(uint8_t *str, uint8_t *hex, int32_t hexlen);
+void tuya_hex2str(uint8_t *str, uint8_t *hex, int hexlen);
 
 /**
  * @brief convert the input string to number
@@ -182,7 +182,7 @@ void tuya_data_reverse(uint8_t *dst, uint8_t *src, uint16_t srclen);
  * 
  * @return none 
  */
-void tuya_byte_sort(uint8_t is_ascend, uint8_t *buf, int32_t len);
+void tuya_byte_sort(uint8_t is_ascend, uint8_t *buf, int len);
 
 /**
  * @brief find <ch> in <str>, start find in index <revr_index>, find in reverse order.
@@ -193,7 +193,7 @@ void tuya_byte_sort(uint8_t is_ascend, uint8_t *buf, int32_t len);
  * 
  * @return -2 on not found, -1 on invalid parameter, >=0 on the position of the character to find 
  */
-int32_t tuya_find_char_with_reverse_idx(const char *str, const int32_t index, const char ch);
+int tuya_find_char_with_reverse_idx(const char *str, const int index, const char ch);
 
 /**
  * @brief calculate the number of bits 1 in a number

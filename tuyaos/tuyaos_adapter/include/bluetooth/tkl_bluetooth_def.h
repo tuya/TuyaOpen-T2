@@ -144,7 +144,7 @@ typedef struct {
 
     union {
         uint16_t            uuid16;                     /**< 16-bit UUID value  */
-        uint32_t              uuid32;                     /**< 32-bit UUID value */
+        uint32_t            uuid32;                     /**< 32-bit UUID value */
         uint8_t             uuid128[16];                /**< Little-Endian UUID bytes. 128bit uuid*/
     }uuid;
 } TKL_BLE_UUID_T;
@@ -260,12 +260,12 @@ typedef struct {
 
 typedef struct {
     uint8_t                         role;               /**< BLE role for this disconnection */
-    int32_t                           reason;             /**< Report Disconnection Reason */
+    int                           reason;             /**< Report Disconnection Reason */
 } TKL_BLE_GAP_DISCONNECT_EVT_T;
 
 typedef struct {
     uint16_t                        char_handle;        /**< Notify Characteristic Handle */
-    int32_t                           result;             /**< Notify Result */
+    int                           result;             /**< Notify Result */
 } TKL_BLE_NOTIFY_RESULT_EVT_T;
 
 typedef struct {
@@ -303,7 +303,7 @@ typedef struct {
 typedef struct {
     TKL_BLE_GAP_EVT_TYPE_E              type;           /**< Gap Event */
     uint16_t                            conn_handle;    /**< Connection Handle */
-    int32_t                               result;         /**< Will Refer to HOST STACK Error Code */
+    int                               result;         /**< Will Refer to HOST STACK Error Code */
 
     union {
         TKL_BLE_GAP_CONNECT_EVT_T       connect;        /**< Receive connect callback, This value can be used with TKL_BLE_EVT_PERIPHERAL_CONNECT and TKL_BLE_EVT_CENTRAL_CONNECT_DISCOVERY*/
@@ -329,7 +329,7 @@ typedef struct {
 typedef struct {
     TKL_BLE_GATT_EVT_TYPE_E             type;           /**< Gatt Event */
     uint16_t                            conn_handle;    /**< Connection Handle */
-    int32_t                               result;         /**< Will Refer to HOST STACK Error Code */
+    int                               result;         /**< Will Refer to HOST STACK Error Code */
 
     union {
         uint16_t                        exchange_mtu;   /**< This value can be used with TKL_BLE_GATT_EVT_MTU_REQUEST and TKL_BLE_GATT_EVT_MTU_RSP*/

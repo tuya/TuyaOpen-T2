@@ -134,7 +134,7 @@ for (p = (head)->next; n = p->next, p != (head); p = n)
  * @param[in] pHead the bidirection list
  * @return 0 means empty, others means empty
  */
-int32_t tuya_list_empty(const P_LIST_HEAD pHead);
+int tuya_list_empty(const P_LIST_HEAD pHead);
 
 /**
  * @brief add new list node into bidirection list

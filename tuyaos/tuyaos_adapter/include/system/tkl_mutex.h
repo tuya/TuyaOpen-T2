@@ -23,7 +23,7 @@ typedef void* TKL_MUTEX_HANDLE;
 *
 * @param[out] pMutexHandle: mutex handle
 *
-* @note This API is used to create and init mutex.
+* @note This API is used to create and init a recursive mutex.
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
@@ -34,7 +34,7 @@ OPERATE_RET tkl_mutex_create_init(TKL_MUTEX_HANDLE *pMutexHandle);
 *
 * @param[in] mutexHandle: mutex handle
 *
-* @note This API is used to lock mutex.
+* @note This API is used to lock a recursive mutex.
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
@@ -45,7 +45,7 @@ OPERATE_RET tkl_mutex_lock(const TKL_MUTEX_HANDLE mutexHandle);
 *
 * @param[in] mutexHandle: mutex handle
 *
-* @note This API is used to try lock mutex.
+* @note This API is used to try lock a recursive mutex.
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
@@ -56,7 +56,7 @@ OPERATE_RET tkl_mutex_trylock(const TKL_MUTEX_HANDLE mutexHandle);
 *
 * @param[in] mutexHandle: mutex handle
 *
-* @note This API is used to unlock mutex.
+* @note This API is used to unlock a recursive mutex.
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
@@ -67,7 +67,7 @@ OPERATE_RET tkl_mutex_unlock(const TKL_MUTEX_HANDLE mutexHandle);
 *
 * @param[in] mutexHandle: mutex handle
 *
-* @note This API is used to release mutex.
+* @note This API is used to release a recursive mutex.
 *
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */

@@ -23,11 +23,11 @@ extern "C" {
 typedef struct
 {
     uint8_t channel;                 ///< AP channel
-    int8_t rssi;                             ///< AP rssi
+    int8_t rssi;                     ///< AP rssi
     uint8_t bssid[6];                ///< AP bssid
     uint8_t ssid[WIFI_SSID_LEN+1];   ///< AP ssid array
     uint8_t s_len;                   ///< AP ssid len
-    uint8_t security;           //refer to WF_AP_AUTH_MODE_E
+    uint8_t security;                //refer to WF_AP_AUTH_MODE_E
     uint8_t resv1;
     uint8_t data_len;
     uint8_t data[0];

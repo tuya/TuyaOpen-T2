@@ -81,7 +81,7 @@ SYS_TIME_T tkl_system_get_millisecond(void);
 *
 * @return random value
 */
-int32_t tkl_system_get_random(uint32_t range);
+int tkl_system_get_random(uint32_t range);
 
 /**
 * @brief Get system reset reason
@@ -123,7 +123,7 @@ void tkl_system_delay(uint32_t num_ms);
 * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
 */
 
-OPERATE_RET tkl_system_get_cpu_info(TUYA_CPU_INFO_T **cpu_ary, int32_t *cpu_cnt);
+OPERATE_RET tkl_system_get_cpu_info(TUYA_CPU_INFO_T **cpu_ary, int *cpu_cnt);
 
 
 #ifdef __cplusplus

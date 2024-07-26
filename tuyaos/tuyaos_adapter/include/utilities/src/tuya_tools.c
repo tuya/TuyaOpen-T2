@@ -22,12 +22,12 @@ char *tuya_strcat(char* dst, const char* src)
 
 
 
-int32_t tuya_strncasecmp(const char *s1, const char *s2, size_t n)
+int tuya_strncasecmp(const char *s1, const char *s2, size_t n)
 {
     const uint8_t *p1 = (const uint8_t *) s1;
     const uint8_t *p2 = (const uint8_t *) s2;
-    int32_t result = 0;
-    int32_t cnt = 0;
+    int result = 0;
+    int cnt = 0;
 
     if (p1 == p2) {
         return 0;
@@ -52,9 +52,9 @@ int32_t tuya_strncasecmp(const char *s1, const char *s2, size_t n)
     return result;
 }
 
-int32_t tuya_strcmp(const char *src,const char *dst)
+int tuya_strcmp(const char *src,const char *dst)
 {
-    int32_t ret = 0;
+    int ret = 0;
 
     while(!(ret  =  *(uint8_t *)src - *(uint8_t *)dst) && *dst) {
         ++src,++dst;
@@ -86,10 +86,10 @@ uint8_t tuya_asc2hex(char asccode)
     return ret;
 }
 
-void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int32_t srclen)
+void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int srclen)
 {
     uint8_t l4,h4;
-    int32_t i,lenstr;
+    int i,lenstr;
     lenstr = srclen;
 
     if(lenstr%2) {
@@ -107,10 +107,10 @@ void tuya_ascs2hex(uint8_t *hex, uint8_t *ascs, int32_t srclen)
     }
 }
 
-void tuya_hex2str(uint8_t *str, uint8_t *hex, int32_t hexlen)
+void tuya_hex2str(uint8_t *str, uint8_t *hex, int hexlen)
 {
     char ddl,ddh;
-    int32_t i;
+    int i;
 
     for (i=0; i<hexlen; i++) {
         ddh = 48 + hex[i] / 16;
@@ -209,18 +209,18 @@ void tuya_data_reverse(uint8_t *dst, uint8_t *src, uint16_t srclen)
 //        index->reverse index,start from 0
 //        ch->find char
 // return: find position
-int32_t tuya_find_char_with_reverse_idx(const char *str, const int32_t index, const char ch)
+int tuya_find_char_with_reverse_idx(const char *str, const int index, const char ch)
 {
     if(NULL == str) {
         return -1;
     }
 
-    int32_t len = strlen(str);
+    int len = strlen(str);
     if(index >= len) {
         return -1;
     }
 
-    int32_t i = 0;
+    int i = 0;
     for(i = (len-1-index);i >= 0;i--) {
         if(str[i] == ch) {
             return i;
@@ -230,9 +230,9 @@ int32_t tuya_find_char_with_reverse_idx(const char *str, const int32_t index, co
     return -2;
 }
 
-void tuya_byte_sort(uint8_t is_ascend, uint8_t *buf, int32_t len)
+void tuya_byte_sort(uint8_t is_ascend, uint8_t *buf, int len)
 {
-    int32_t i,j;
+    int i,j;
     uint8_t tmp = 0;
 
     for(j = 1;j < len;j++) {

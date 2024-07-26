@@ -46,7 +46,7 @@ static void __list_del(const P_LIST_HEAD pPrev, const P_LIST_HEAD pNext)
  * @param[in] pHead the bidirection list
  * @return 0 means empty, others means empty
  */
-int32_t tuya_list_empty(const P_LIST_HEAD pHead)
+int tuya_list_empty(const P_LIST_HEAD pHead)
 {
     return pHead->next == pHead;
 }
