@@ -1,4 +1,9 @@
-menu "configure bk7231n"
+menu "configure t2"
+
+    config PLATFORM_T2
+        bool
+        default y
+
     config OPERATING_SYSTEM
         int
         default 98
@@ -20,19 +25,23 @@ menu "configure bk7231n"
         default y
 
     config ENABLE_GPIO
-        bool "ENABLE_ADC --- use gpio"
+        bool "ENABLE_GPIO --- use gpio"
         default y
 
     config ENABLE_PWM
-        bool "ENABLE_ADC --- use pwm"
+        bool "ENABLE_PWM --- use pwm"
+        default y
+
+    config ENABLE_I2C
+        bool "ENABLE_SW_I2C --- use software i2c"
         default y
 
     config ENABLE_SPI
-        bool "ENABLE_ADC --- use spi"
+        bool "ENABLE_SPI --- use spi"
         default y
 
     config ENABLE_TIMER
-        bool "ENABLE_ADC --- use timer"
+        bool "ENABLE_TIMER --- use timer"
         default y
 
     config ENABLE_WATCHDOG

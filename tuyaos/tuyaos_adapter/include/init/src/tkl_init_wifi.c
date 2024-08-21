@@ -33,6 +33,7 @@ const TKL_WIFI_DESC_T TKL_WIFI = {
     .station_connect                = tkl_wifi_station_connect,
     .station_fast_connect           = tkl_wifi_station_fast_connect,
     .station_disconnect             = tkl_wifi_station_disconnect,
+    .set_ip                         = tkl_wifi_set_ip,
     .get_ip                         = tkl_wifi_get_ip,
     .get_bssid                      = tkl_wifi_get_bssid,
     .station_get_status             = tkl_wifi_station_get_status,

@@ -16,6 +16,64 @@
 #include "gpio_pub.h"
 // --- END: user defines and implements ---
 
+extern void __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_E port, const TUYA_PIN_NAME_E scl_pin);
+extern void __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_E port, const TUYA_PIN_NAME_E sda_pin);
+
+/**
+ * @brief tuya io pinmux func
+ *
+ * @param[in] pin: pin number
+ * @param[in] pin_func: pin function
+ *
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_io_pinmux_config(TUYA_PIN_NAME_E pin, TUYA_PIN_FUNC_E pin_func)
+{
+    // --- BEGIN: user implements ---
+    switch (pin_func) {
+        case TUYA_IIC0_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_0, pin);
+            break;
+        case TUYA_IIC0_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_0, pin);
+            break;
+        case TUYA_IIC1_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_1, pin);
+            break;
+        case TUYA_IIC1_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_1, pin);
+            break;
+        case TUYA_IIC2_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_2, pin);
+            break;
+        case TUYA_IIC2_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_2, pin);
+            break;
+        case TUYA_IIC3_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_3, pin);
+            break;
+        case TUYA_IIC3_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_3, pin);
+            break;
+        case TUYA_IIC4_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_4, pin);
+            break;
+        case TUYA_IIC4_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_4, pin);
+            break;
+        case TUYA_IIC5_SCL:
+            __tkl_i2c_set_scl_pin(TUYA_I2C_NUM_5, pin);
+            break;
+        case TUYA_IIC5_SDA:
+            __tkl_i2c_set_sda_pin(TUYA_I2C_NUM_5, pin);
+            break;
+        default:
+            break;
+    
+    }
+    return OPRT_OK;
+    // --- END: user implements ---
+}
 /**
  * @brief tuya multiple io pinmux func
  * @param[in] cfg: pin cfg array

@@ -151,7 +151,6 @@ OPERATE_RET tkl_flash_write(uint32_t addr, const uint8_t *src, uint32_t size)
 
     flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
 
-    //�Ᵽ��
     protect_flag = __uni_flash_is_protect_all();
     flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
     
@@ -197,7 +196,6 @@ OPERATE_RET tkl_flash_erase(uint32_t addr, uint32_t size)
 
     flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
 
-    //�Ᵽ��
     protect_flag = __uni_flash_is_protect_all();
     if (protect_flag) {
         param = FLASH_PROTECT_HALF;
@@ -207,13 +205,6 @@ OPERATE_RET tkl_flash_erase(uint32_t addr, uint32_t size)
     for (i = start_sec; i <= end_sec; i++) {
         sector_addr = PARTITION_SIZE * i;
         ddev_control(flash_handle, CMD_FLASH_ERASE_SECTOR, (void *)(&sector_addr));
-    }
-
-    protect_flag = __uni_flash_is_protect_all();    
-    if(protect_flag)
-    {
-        param = FLASH_PROTECT_ALL;
-        ddev_control(flash_handle, CMD_FLASH_SET_PROTECT, (void *)&param);
     }
 
     ddev_close(flash_handle);

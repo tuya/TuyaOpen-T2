@@ -267,6 +267,16 @@ OPERATE_RET tkl_wifi_get_cur_channel(uint8_t *chan);
 OPERATE_RET tkl_wifi_set_sniffer(const BOOL_T en, const SNIFFER_CALLBACK cb);
 
 /**
+ * @brief set wifi ip info.when wifi works in
+ *        ap+station mode, wifi has two ips.
+ * 
+ * @param[in]       wf          wifi function type
+ * @param[out]      ip          the ip addr info
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_set_ip(const WF_IF_E wf, NW_IP_S *ip);
+
+/**
  * @brief get wifi ip info.when wifi works in
  *        ap+station mode, wifi has two ips.
  * 

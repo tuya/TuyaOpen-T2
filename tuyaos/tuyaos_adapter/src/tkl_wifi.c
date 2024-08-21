@@ -630,6 +630,52 @@ OPERATE_RET tkl_wifi_set_sniffer(const BOOL_T en, const SNIFFER_CALLBACK cb)
 }
 
 /**
+ * @brief set wifi ip info.when wifi works in
+ *        ap+station mode, wifi has two ips.
+ * 
+ * @param[in]       wf          wifi function type
+ * @param[out]      ip          the ip addr info
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_set_ip(const WF_IF_E wf, NW_IP_S *ip)
+{
+    // --- BEGIN: user implements ---
+    int ret = OPRT_OK;
+    IPStatusTypedef wNetConfig;
+    WiFi_Interface iface;
+
+    memset(&wNetConfig, 0x0, sizeof(IPStatusTypedef));
+
+    switch ( wf ) {
+        case WF_STATION:
+            iface = STATION;
+            wNetConfig.dhcp = (ip->dhcpen==0)?DHCP_DISABLE:DHCP_CLIENT;
+        break;
+    
+        case WF_AP:
+            iface = SOFT_AP;
+            wNetConfig.dhcp = (ip->dhcpen==0)?DHCP_DISABLE:DHCP_SERVER;
+        break;
+        
+        default:
+            ret = OPRT_OS_ADAPTER_INVALID_PARM;
+        break;
+    }
+
+    if (OPRT_OK == ret) {
+        os_strcpy(wNetConfig.ip, ip->ip);
+        os_strcpy(wNetConfig.mask, ip->mask);
+        os_strcpy(wNetConfig.gate, ip->gw);
+        os_strcpy(wNetConfig.dns, ip->dns);
+
+        ret = bk_wlan_set_ip_status(&wNetConfig, iface);
+    }
+
+    return ret;  
+    // --- END: user implements ---
+}
+
+/**
  * @brief get wifi ip info.when wifi works in
  *        ap+station mode, wifi has two ips.
  * 
@@ -667,6 +713,8 @@ OPERATE_RET tkl_wifi_get_ip(const WF_IF_E wf, NW_IP_S *ip)
         os_strcpy(ip->ip, wNetConfig.ip);
         os_strcpy(ip->mask, wNetConfig.mask);
         os_strcpy(ip->gw, wNetConfig.gate);
+        os_strcpy(ip->dns, wNetConfig.dns);
+        ip->dhcpen = (wNetConfig.dhcp==DHCP_DISABLE)?0:1;
     }
 
     return ret;  

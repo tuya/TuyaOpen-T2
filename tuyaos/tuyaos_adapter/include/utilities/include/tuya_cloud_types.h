@@ -36,39 +36,6 @@ typedef unsigned int TIME_T;
 #define TRUE 1
 #endif
 
-// #ifndef IN
-// #define IN
-// #endif
-
-// #ifndef OUT
-// #define OUT
-// #endif
-
-// #ifndef INOUT
-// #define INOUT
-// #endif
-
-// #ifndef VOID
-// #define VOID void
-// #endif
-
-// #ifndef void
-// #define void void
-// #endif
-
-
-// #ifndef CONST
-// #define CONST const
-// #endif
-
-// #ifndef STATIC
-// #define STATIC static
-// #endif
-
-// #ifndef SIZEOF
-// #define SIZEOF sizeof
-// #endif
-
 #ifndef INLINE
 #define INLINE inline
 #endif
@@ -157,6 +124,8 @@ typedef struct
     char ip[16];    /* ip addr:  xxx.xxx.xxx.xxx  */
     char mask[16];  /* net mask: xxx.xxx.xxx.xxx  */
     char gw[16];    /* gateway:  xxx.xxx.xxx.xxx  */
+    char dns[16];   /* dns server */
+    BOOL_T dhcpen;  /* is dhcp enable */
 }NW_IP_S;
 
 #define MAC_ADDR_LEN 6
@@ -440,6 +409,12 @@ typedef uint16_t TUYA_PIN_FUNC_E;
 #define  TUYA_IIC1_SDA       0x3
 #define  TUYA_IIC2_SCL       0x4
 #define  TUYA_IIC2_SDA       0x5
+#define  TUYA_IIC3_SCL       0x6
+#define  TUYA_IIC3_SDA       0x7
+#define  TUYA_IIC4_SCL       0x8
+#define  TUYA_IIC4_SDA       0x9
+#define  TUYA_IIC5_SCL       0xA
+#define  TUYA_IIC5_SDA       0xB
 
 #define  TUYA_UART0_TX       0x100
 #define  TUYA_UART0_RX       0x101

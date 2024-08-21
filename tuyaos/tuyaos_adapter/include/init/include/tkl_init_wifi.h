@@ -34,6 +34,7 @@ typedef struct {
     OPERATE_RET (*set_cur_channel)              (const uint8_t chan);
     OPERATE_RET (*get_cur_channel)              (uint8_t *chan);
     OPERATE_RET (*set_sniffer)                  (const BOOL_T en, const SNIFFER_CALLBACK cb);
+    OPERATE_RET (*set_ip)                       (const WF_IF_E wf, NW_IP_S *ip);
     OPERATE_RET (*get_ip)                       (const WF_IF_E wf, NW_IP_S *ip);
     OPERATE_RET (*set_mac)                      (const WF_IF_E wf, const NW_MAC_S *mac);
     OPERATE_RET (*get_mac)                      (const WF_IF_E wf, NW_MAC_S *mac);
