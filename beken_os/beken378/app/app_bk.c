@@ -886,8 +886,220 @@ void app_start(void)
 #endif
 }
 
+#define FLASH_OTP_DEMO		0
+#if ((CFG_USE_FLASH_OTP) && FLASH_OTP_DEMO)
+#include "flash_bypass.h"
+uint8_t otp_ram_tab[] = "abcdefghijklnmopqrstuvwxyz\r\n";
+
+void beken_otp_test(void)
+{
+    UINT8 i = 0;
+    otp_ctrl_t otp_ctrl     = {0};
+    otp_ctrl.otp_index      = 1;  // "1 or 2 or 3"
+    otp_ctrl.write_data_len = sizeof(otp_ram_tab);
+    otp_ctrl.write_data     = (uint8_t *)otp_ram_tab;
+    otp_ctrl.read_data_len  = sizeof(otp_ram_tab);
+    otp_ctrl.read_data      = (uint8_t *)os_malloc(otp_ctrl.read_data_len);
+
+    if(!otp_ctrl.read_data) {
+        bk_printf("no memory for %s to malloc\r\n", __func__);
+        return;
+    }
+    // flash_bypass_otp_operation(CMD_OTP_LOCK, &otp_ctrl);
+
+    flash_bypass_otp_operation(CMD_OTP_READ, &otp_ctrl);
+
+	for(uint8_t i = 0; i < otp_ctrl.read_data_len; i++)
+		bk_printf("%c", otp_ctrl.read_data[i]);
+	bk_printf("\r\n");
+
+    do {
+        flash_bypass_otp_operation(CMD_OTP_WRITE, &otp_ctrl);
+        flash_bypass_otp_operation(CMD_OTP_READ, &otp_ctrl);
+
+		for(uint8_t i = 0; i < otp_ctrl.write_data_len; i++)
+			bk_printf("%c", otp_ctrl.write_data[i]);
+		bk_printf("\r\n");
+
+		for(uint8_t i = 0; i < otp_ctrl.read_data_len; i++)
+			bk_printf("%c", otp_ctrl.read_data[i]);
+		bk_printf("\r\n");
+	        bk_printf("otp write retry %d\n", i);
+    } while((os_memcmp(otp_ctrl.write_data, otp_ctrl.read_data, otp_ctrl.read_data_len) != 0) && (i++ < 3));
+    os_free(otp_ctrl.read_data);
+}
+#endif
+
+extern int manual_cal_rfcali_status(void);
+#define OTP_FLASH_DATA_SIZE        1024
+#define OTP_FLASH_RFDATA_SIZE       512
+#define PARTITION_SIZE         (1 << 12) /* 4KB */
+
+#include "drv_model_pub.h"
+#include "flash_pub.h"
+#include "flash_bypass.h"
+#include "BkDriverFlash.h"
+
+static void __read_otp_flash_rfcali_data(uint8_t *otp_data, uint16_t len)
+{
+    otp_ctrl_t otp_ctrl     = {0};
+    otp_ctrl.otp_index      = 1;  // "1 or 2 or 3"
+    otp_ctrl.write_data_len = 0;
+    otp_ctrl.write_data     = NULL;
+    otp_ctrl.read_data_len  = len;
+    otp_ctrl.read_data      = otp_data;
+
+    flash_bypass_otp_operation(CMD_OTP_READ, &otp_ctrl);
+}
+
+static int __check_otp_flash_rfcali_data(uint8_t *otp_data, uint16_t len)
+{
+    struct txpwr_elem_st
+    {
+        UINT32 type;
+        UINT32 len;
+    } *head;
+
+    head = (struct txpwr_elem_st *)otp_data;
+    if (head->type != BK_FLASH_OPT_TLV_HEADER) {
+        bk_printf("otp flash data type error %x\n", head->type);
+        return -1;
+    }
+    return 0; 
+}
+
+void backup_rfcali_data(void)
+{
+    DD_HANDLE flash_handle;
+    UINT32 status;
+    uint32_t addr;
+    uint8_t *dst;
+    uint32_t size;
+
+    dst = os_malloc(OTP_FLASH_DATA_SIZE);
+    if (dst == NULL) {
+        bk_printf("malloc rfcali data failed\n");
+        return;
+    }
+
+    memset(dst, 0, OTP_FLASH_DATA_SIZE);
+
+    otp_ctrl_t otp_ctrl     = {0};
+    otp_ctrl.otp_index      = 1;  // "1 or 2 or 3"
+    otp_ctrl.write_data_len = 0;
+    otp_ctrl.write_data     = NULL;
+    otp_ctrl.read_data_len  = OTP_FLASH_DATA_SIZE;
+    otp_ctrl.read_data      = dst;
+    flash_bypass_otp_operation(CMD_OTP_READ, &otp_ctrl);
+
+    /* TODO: need to consider whether to use locks at the TKL layer*/
+    hal_flash_lock();
+
+    flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
+	bk_logic_partition_t *pt = bk_flash_get_info(BK_PARTITION_RF_FIRMWARE);
+    addr = pt->partition_start_addr;
+    size = OTP_FLASH_RFDATA_SIZE;
+    ddev_read(flash_handle, (char *)dst, size, addr);
+    ddev_close(flash_handle);
+
+    /* TODO: need to consider whether to use locks at the TKL layer*/
+    hal_flash_unlock();
+
+    memset(&otp_ctrl, 0, sizeof(otp_ctrl_t));
+    otp_ctrl.otp_index      = 1;  // "1 or 2 or 3"
+    otp_ctrl.write_data_len = OTP_FLASH_DATA_SIZE;
+    otp_ctrl.write_data     = dst;
+    otp_ctrl.read_data_len  = 0;
+    otp_ctrl.read_data      = NULL;
+
+    flash_bypass_otp_operation(CMD_OTP_WRITE, &otp_ctrl);    
+   
+    if (dst)
+        os_free(dst);
+    
+    bk_printf("backup rfcali data success\n");
+}
+static unsigned int __uni_flash_is_protect_all(void)
+{
+    DD_HANDLE flash_handle;
+    unsigned int status;
+    unsigned int param;
+
+    flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
+    ddev_control(flash_handle, CMD_FLASH_GET_PROTECT, (void *)&param);
+    ddev_close(flash_handle);
+
+    return (FLASH_PROTECT_ALL == param);
+}
+static void __recovery_rfcali_data(uint8_t *otp_data, uint16_t len)
+{
+    DD_HANDLE flash_handle;
+    UINT32 status;
+    unsigned int  param;
+    unsigned int protect_flag;
+    unsigned int sector_addr;
+
+    uint32_t addr;
+    uint8_t *dst;
+
+	bk_logic_partition_t *pt = bk_flash_get_info(BK_PARTITION_RF_FIRMWARE);
+    addr = pt->partition_start_addr;
+
+    /* TODO: need to consider whether to use locks at the TKL layer*/
+    hal_flash_lock();
+
+    flash_handle = ddev_open(FLASH_DEV_NAME, &status, 0);
+
+    protect_flag = __uni_flash_is_protect_all();
+    if (protect_flag) {
+        param = FLASH_PROTECT_HALF;
+        ddev_control(flash_handle, CMD_FLASH_SET_PROTECT, (void *)&param);
+    }
+
+    sector_addr = addr;
+    ddev_control(flash_handle, CMD_FLASH_ERASE_SECTOR, (void *)(&sector_addr));
+
+    ddev_write(flash_handle, (char *)otp_data, OTP_FLASH_RFDATA_SIZE, addr);
+
+    ddev_close(flash_handle);
+
+    /* TODO: need to consider whether to use locks at the TKL layer*/
+    hal_flash_unlock();
+
+    bk_printf("recovery rfcali data success\n");
+}
+static int user_recovery_rfcali_data(void)
+{
+    if(manual_cal_rfcali_status()) {
+        // rfcali data exist
+        return 0;
+    }
+
+    bk_printf("[NOTE]: rfcali data isn't exist\n");
+
+    uint8_t *otp_data = os_malloc(OTP_FLASH_DATA_SIZE);
+    if(otp_data == NULL) {
+        bk_printf("malloc rfcali data failed\n");
+        return -1;
+    }
+    memset(otp_data, 0, OTP_FLASH_DATA_SIZE);
+    __read_otp_flash_rfcali_data(otp_data, OTP_FLASH_DATA_SIZE);
+    
+    if (__check_otp_flash_rfcali_data(otp_data, OTP_FLASH_DATA_SIZE) < 0) {
+        bk_printf("check rfcali data failed\n");
+    } else {
+        bk_printf("check rfcali data success\n");
+        __recovery_rfcali_data(otp_data, OTP_FLASH_RFDATA_SIZE);
+    }
+    os_free(otp_data);
+
+    return 0;
+}
+
 void user_main_entry(void)
 {
+    user_recovery_rfcali_data();
+
     extern void tuya_app_main(void);
     tuya_app_main();
     /*

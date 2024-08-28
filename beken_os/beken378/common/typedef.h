@@ -28,7 +28,7 @@ typedef unsigned char         BOOL;
 //typedef unsigned char         bool;
 
 #define LPVOID              void *
-#define void                void
+#define VOID                void
 
 typedef volatile signed long  VS32;
 typedef volatile signed short VS16;

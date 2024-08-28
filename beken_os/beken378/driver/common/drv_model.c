@@ -231,7 +231,7 @@ UINT32 ddev_write(DD_HANDLE handle, char *user_buf, UINT32 count, UINT32 op_flag
     return status;
 }
 
-UINT32 ddev_control(DD_HANDLE handle, UINT32 cmd, void *param)
+UINT32 ddev_control(DD_HANDLE handle, UINT32 cmd, VOID *param)
 {
     UINT32 id;
     UINT32 status;
@@ -256,7 +256,7 @@ UINT32 ddev_control(DD_HANDLE handle, UINT32 cmd, void *param)
     return status;
 }
 
-UINT32 sddev_control(char *dev_name, UINT32 cmd, void *param)
+UINT32 sddev_control(char *dev_name, UINT32 cmd, VOID *param)
 {
     UINT32 i;
     UINT32 status;

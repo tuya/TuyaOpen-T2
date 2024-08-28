@@ -634,6 +634,7 @@ endif
 SRC_C += ./beken378/func/wlan_ui/wlan_ui.c
 #SRC_C += ./beken378/func/bk_tuya_pwm/bk_tuya_pwm.c
 SRC_C += ./beken378/func/net_param_intf/net_param.c
+SRC_C += ./beken378/func/misc/flash_bypass.c
 
 #rwnx ip module
 # SRC_C += ./beken378/ip/common/co_dlist.c
@@ -777,7 +778,7 @@ CFLAGS += $(WOLFSSL_CFLAGS)
 endif
 
 LIBFLAGS =
-LIBFLAGS += -L./beken378/lib/ -lrwnx
+LIBFLAGS += -L./beken378/lib/ -lrwnx -lmftest
 ifeq ("${CFG_BLE_5X_USE_RWIP_LIB}", "1")
 ifeq ("${CFG_USE_BK_HOST}", "1")
 LIBFLAGS += -L./beken378/lib/ -lble
@@ -807,7 +808,7 @@ CFLAGS += -DUSER_SW_VER=\"$(APP_VERSION)\" -DAPP_BIN_NAME=\"$(APP_BIN_NAME)\"
 # -------------------------------------------------------------------
 # add tuya iot application compile support
 # -------------------------------------------------------------------
-TY_OUTPUT = ${OUTPUT_DIR}/$(APP_BIN_NAME)_$(APP_VERSION)
+TY_OUTPUT = ${OUTPUT_DIR}
 TY_INC_DIRS += ${HEADER_DIR}
 #TY_INC_DIRS += $(shell find $(TOP_DIR)/sdk/include -type d)
 #SDK_INCLUDE_DIRS := $(shell find $(TOP_DIR)/sdk -name include -type d)
@@ -847,7 +848,7 @@ endif # COMPONENTS_LIB
 application: test_target
 ifeq ("${ota_idx}", "1")
 	$(Q)$(ECHO) "  $(GREEN)LD   $(APP_BIN_NAME)_$(APP_VERSION).axf$(NC)"
-	$(Q)$(LD) $(LFLAGS) -o $(TY_OUTPUT)/$(APP_BIN_NAME)_$(APP_VERSION).axf  $(OBJ_LIST) $(OBJ_S_LIST) $(OBJ_OS_LIST) $(LIBFLAGS) -T./beken378/build/bk7231n_ota.ld
+	$(Q)$(LD) $(LFLAGS) -o $(TY_OUTPUT)/$(APP_BIN_NAME)_$(APP_VERSION).axf -Wl,--start-group $(OBJ_LIST) $(OBJ_S_LIST) $(OBJ_OS_LIST) $(LIBFLAGS) -Wl,--end-group -T./beken378/build/bk7231n_ota.ld
 else ifeq ("${ota_idx}", "2")
 else
 	@echo ===========================================================

@@ -27,6 +27,9 @@
 #endif
 #include "start_type_pub.h"
 #include "BkDriverFlash.h"
+#if (CFG_SOC_NAME == SOC_BK7238) || (CFG_SOC_NAME == SOC_BK7231N)
+#include "flash_bypass.h"
+#endif
 
 UINT32 func_init_extended(void)
 {
@@ -129,6 +132,10 @@ UINT32 func_init_basic(void)
 {
     intc_init();
     hal_flash_init();
+
+#if (CFG_SOC_NAME == SOC_BK7238) || (CFG_SOC_NAME == SOC_BK7231N)
+	flash_bypass_operate_sr_init();
+#endif
 
     return 0;
 }

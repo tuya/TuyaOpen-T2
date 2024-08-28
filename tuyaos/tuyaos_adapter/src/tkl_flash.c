@@ -14,6 +14,7 @@
 #include "tuya_error_code.h"
 #include "drv_model_pub.h"
 #include "flash_pub.h"
+#include "flash_bypass.h"
 
 typedef struct 
 {

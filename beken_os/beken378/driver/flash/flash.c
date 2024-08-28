@@ -31,6 +31,7 @@ static const flash_config_t flash_config[] =
 };
 
 static const flash_config_t *flash_current_config = NULL;
+static FUNC_2PARAM_CB flash_wr_sr_bypass_method_cd = NULL;
 
 static UINT32 flash_id;
 static DD_OPERATIONS flash_op =
@@ -139,6 +140,16 @@ static UINT16 flash_read_sr(UINT8 sr_width)
 static void flash_write_sr(UINT8 sr_width,  UINT16 val)
 {
     UINT32 value;
+
+	if(flash_wr_sr_bypass_method_cd)
+	{
+		int ret = flash_wr_sr_bypass_method_cd((uint32_t)sr_width, (uint32_t)val);
+		if(ret == 1)
+		{
+			// if return 1, means writen sr by volatile successed
+			return;
+		}
+	}
     GLOBAL_INT_DECLARATION();
 
     GLOBAL_INT_DISABLE();
@@ -313,7 +324,7 @@ void flash_set_line_mode(UINT8 mode)
     }
 }
 
-static UINT32 flash_get_id(void)
+UINT32 flash_get_id(void)
 {
     UINT32 value;
 
@@ -324,6 +335,48 @@ static UINT32 flash_get_id(void)
 
 	flash_id = REG_READ(REG_FLASH_RDID_DATA_FLASH);
     return flash_id;
+}
+
+UINT32 flash_is_xtx_type(void)
+{
+	if((0x0B4014 == flash_id) || (0x0B4015 == flash_id)
+			|| (0x0B4016 == flash_id)
+			|| (0x0B4017 == flash_id)
+			|| (0x0E4016 == flash_id))
+	{
+		return 1;
+	}
+	// puya flash
+	else if((0x854215 == flash_id) || (0x856015 == flash_id) || (0x852015 == flash_id))
+	{
+		return 1;
+	}
+    //zg_th25q16b
+    else if (0xEB6015 == flash_id)
+	{
+		return 1;
+    }
+    // gd_25q16c
+    else if (0xc84015 == flash_id)
+    {
+        return 1;
+    }
+	else
+	{
+		return 0;
+	}
+}
+
+UINT32 flash_is_support_0x50h_cmd(void)
+{
+	return flash_is_xtx_type();
+}
+
+UINT32 flash_register_bypass_cb(FUNC_2PARAM_CB cb)
+{
+	flash_wr_sr_bypass_method_cd = cb;
+
+	return 0;
 }
 
 static UINT32 flash_read_mid(void)

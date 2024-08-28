@@ -6,6 +6,7 @@
 typedef void (*FUNCPTR)(void);
 typedef void (*FUNC_1PARAM_PTR)(void *ctxt);
 typedef void (*FUNC_2PARAM_PTR)(void *arg, uint8_t vif_idx);
+typedef int (*FUNC_2PARAM_CB)(uint32_t larg, uint32_t rarg);
 
 #ifndef MAX
 #define MAX(x, y)                  (((x) > (y)) ? (x) : (y))
