@@ -38,7 +38,7 @@ void delay05us(INT32 num);
 #define SUMNUMBERS					4
 #define MINOFFSET			    	16
 
-#define cpu_delay(val)            delay(MAX(1, val/100))
+#define cpu_delay(val)            bk_delay(MAX(1, val/100))
 #define DELAY1US				  100
 
 #define cal_delay(val)            delay05us(MAX(1, val))	// 8us

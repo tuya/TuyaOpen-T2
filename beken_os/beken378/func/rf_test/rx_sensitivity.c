@@ -407,7 +407,7 @@ void rs_get_rx_result(void)
 	REG_WRITE(0xc0000298, 0x0);
 	REG_WRITE(0xc0000040, 0x00011881);
 
-	delay(100);
+	bk_delay(100);
 
 	TXBW20NEW = REG_READ(0xc0000b70);
 	TXBW40NEW = REG_READ(0xc0000b74);

@@ -244,7 +244,7 @@ void sctrl_set_cpu_clk_dco(void)
     
     reg_val |= ((MCLK_FIELD_DCO&MCLK_MUX_MASK) << MCLK_MUX_POSI);
     reg_val |= HCLK_DIV2_EN_BIT;    
-    delay(10);
+    bk_delay(10);
     REG_WRITE(SCTRL_CONTROL, reg_val); 
     reg_val &= ~(MCLK_DIV_MASK << MCLK_DIV_POSI);
     REG_WRITE(SCTRL_CONTROL, reg_val);
@@ -887,7 +887,7 @@ void sctrl_mcu_sleep(UINT32 peri_clk)
     else
     {
         PS_DEBUG_DOWN_TRIGER;
-        delay(1);
+        bk_delay(1);
 #if PS_CLOSE_PERI_CLK
         /* close all peri clock*/
         ps_saves[0].peri_clk_cfg= REG_READ(ICU_PERI_CLK_PWD);        
@@ -901,7 +901,7 @@ void sctrl_mcu_sleep(UINT32 peri_clk)
 #endif
         WFI();              
     }
-    delay(5);
+    bk_delay(5);
 }
 UINT32 sctrl_mcu_wakeup(void)
 {
@@ -924,7 +924,7 @@ UINT32 sctrl_mcu_wakeup(void)
     else
     {
     	PS_DEBUG_BCN_TRIGER;   
-        delay(2);
+        bk_delay(2);
     	PS_DEBUG_BCN_TRIGER;   
     
         #if PS_CLOSE_PERI_CLK
@@ -1076,7 +1076,7 @@ void sctrl_subsys_reset(UINT32 cmd)
     if(reg)
     {
         REG_WRITE(reg, reset_word);
-        delay(10);
+        bk_delay(10);
         REG_WRITE(reg, 0);
     }
 
@@ -1247,7 +1247,7 @@ void sctrl_enter_rtos_idle_sleep(UINT32 peri_clk)
     reg &= ~(SLEEP_MODE_MASK << SLEEP_MODE_POSI);
     reg = reg | SLEEP_MODE_CFG_NORMAL_VOL_WORD;
     REG_WRITE(SCTRL_SLEEP, reg);  
-    delay(5);
+    bk_delay(5);
 }
 
 void sctrl_exit_rtos_idle_sleep(void)
@@ -1269,7 +1269,7 @@ void sctrl_exit_rtos_idle_sleep(void)
     reg |= (BLK_EN_26M_XTAL | BLK_EN_DPLL_480M | BLK_EN_XTAL2RF | BLK_EN_ANALOG_SYS_LDO);
     REG_WRITE(SCTRL_BLOCK_EN_CFG, reg); 	
 	
-    delay(1);  //delay 1.1ms for 26MHz DCO clock. need change for other dco clock frequency
+    bk_delay(1);  //delay 1.1ms for 26MHz DCO clock. need change for other dco clock frequency
     sctrl_cali_dpll(0);
     /* dpll division reset release*/
     reg = REG_READ(SCTRL_CONTROL); 
@@ -1694,7 +1694,7 @@ void sctrl_enter_rtos_deep_sleep(PS_DEEP_CTRL_PARAM *deep_param)
     reg = reg | SLEEP_MODE_CFG_DEEP_WORD;
     REG_WRITE(SCTRL_SLEEP, reg);  
   
-    delay(5);
+    bk_delay(5);
 }
 
 RESET_SOURCE_STATUS sctrl_get_deep_sleep_wake_soure(void)
@@ -1827,7 +1827,7 @@ UINT32 sctrl_ctrl(UINT32 cmd, void *param)
 
     case CMD_SCTRL_NORMAL_WAKEUP:
         sctrl_hw_wakeup();
-        delay(50);
+        bk_delay(50);
         sctrl_rf_wakeup();
         break;
 #endif
@@ -1978,7 +1978,7 @@ UINT32 sctrl_ctrl(UINT32 cmd, void *param)
                      << MODEM_CORE_RESET_POSI);
         REG_WRITE(SCTRL_MODEM_CORE_RESET_PHY_HCLK, reg);
 
-        delay(1);
+        bk_delay(1);
         reg = ret;
         REG_WRITE(SCTRL_MODEM_CORE_RESET_PHY_HCLK, reg);
 
@@ -1986,7 +1986,7 @@ UINT32 sctrl_ctrl(UINT32 cmd, void *param)
         reg = REG_READ(SCTRL_RESET);
         while(reg & MODEM_CORE_RESET_BIT)
         {
-            delay(10);
+            bk_delay(10);
             reg = REG_READ(SCTRL_RESET);
         }
         ret = SCTRL_SUCCESS;

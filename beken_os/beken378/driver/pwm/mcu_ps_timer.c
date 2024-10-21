@@ -62,10 +62,10 @@ void ps_pwm_reconfig(UINT32 period, UINT8 clk_mux)
     //disable
 #if (CFG_SOC_NAME == SOC_BK7231)	
     ps_pwm_disable();
-    delay(5);
+    bk_delay(5);
     //new
     ps_pwm_set_period(period, clk_mux);
-    delay(1);
+    bk_delay(1);
     //reenable
     ps_pwm_enable();
     
@@ -76,7 +76,7 @@ void ps_pwm_reconfig(UINT32 period, UINT8 clk_mux)
     ps_pwm_set_period(period, clk_mux);
     //reenable
     ps_pwm_enable();
-    delay(5);
+    bk_delay(5);
 
     REG_WRITE(PWM_INTERRUPT_STATUS,0x3f);
 #endif
@@ -115,9 +115,9 @@ void ps_timer3_enable(UINT32 period)
     reg = REG_READ(TIMER3_5_CTL);
     reg &= (~TIMERCTL3_EN_BIT);
     REG_WRITE(TIMER3_5_CTL,reg);
-    delay(2);
+    bk_delay(2);
     REG_WRITE(TIMER3_CNT,period);
-    delay(2);
+    bk_delay(2);
     reg = REG_READ(TIMER3_5_CTL);
     reg |= (TIMERCTL3_EN_BIT);
     reg &= ~(0x7 << TIMERCTLB_INT_POSI);
@@ -158,9 +158,9 @@ UINT32 ps_timer3_disable(void)
     reg &= (~TIMERCTL3_EN_BIT);
     reg &= ~(0x7 << TIMERCTLB_INT_POSI);
     REG_WRITE(TIMER3_5_CTL,reg);
-    delay(2);
+    bk_delay(2);
     REG_WRITE(TIMER3_CNT,FCLK_DURATION_MS*32);
-    delay(2);
+    bk_delay(2);
     reg = REG_READ(TIMER3_5_CTL);
     reg |= (TIMERCTL3_EN_BIT);
     REG_WRITE(TIMER3_5_CTL,reg);

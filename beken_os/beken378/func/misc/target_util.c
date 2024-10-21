@@ -14,7 +14,7 @@
 				delay(10):about 125us
 				delay(100):about 850us
  */
-void delay(INT32 num)
+void bk_delay(INT32 num)
 {
     volatile INT32 i, j;
 
@@ -62,7 +62,7 @@ void delay_ms(UINT32 ms_count)
     ASSERT(clk);
 
     cell = 100 * clk / 26000000;
-    delay(ms_count * cell);
+    bk_delay(ms_count * cell);
 }
 
 /*

@@ -336,7 +336,7 @@ void power_save_mac_idle_callback(void)
         nxmac_wake_up_sw_setf(0);
         /*first clear beacon interval,delay,then set beacon interval,to fix rw sleep wakeup time*/
         nxmac_beacon_int_setf(0);
-        delay(1);
+        bk_delay(1);
         nxmac_beacon_int_setf(bk_ps_info.ps_beacon_int);
         os_null_printf(" sleep_first %d\r\n", bk_ps_info.liston_mode);
         os_printf(" dtim period:%d multi:%d\r\n", bk_ps_info.ps_dtim_period, bk_ps_info.ps_dtim_multi);
@@ -804,7 +804,7 @@ void power_save_dtim_ps_exit(void)
     bk_ps_info.PsDataWakeupWaitTimeMs = 0 ;
     bk_ps_info.PsPeriWakeupWaitTimeMs = 0 ;
     nxmac_beacon_int_setf(0);
-    delay(1);
+    bk_delay(1);
     bk_ps_info.ps_real_sleep = 0;
     bk_ps_info.sleep_count = 0;
     bk_ps_info.sleep_first = 1;
@@ -985,7 +985,7 @@ void power_save_rf_dtim_manual_do_wakeup(void)
                 || bk_ps_info.ps_arm_wakeup_way == PS_ARM_WAKEUP_UPING)
             && (bk_ps_info.ps_real_sleep == 1))
     {
-        delay(1);
+        bk_delay(1);
         PS_DEBUG_UP_TRIGER;
 
         if(bk_ps_info.ps_arm_wakeup_way == PS_ARM_WAKEUP_UPING)
@@ -1288,7 +1288,7 @@ void power_save_keep_timer_real_handler()
             ps_reseted_moniter_flag = 0;
         }
         GLOBAL_INT_RESTORE();
-        delay(1);
+        bk_delay(1);
         PS_DEBUG_PWM_TRIGER;
 
 #if CFG_USE_STA_PS

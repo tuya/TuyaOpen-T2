@@ -98,15 +98,17 @@ SECTIONS
         *(.text.portDISABLE_IRQ)
         *(.text.vPortEnterCritical)
         *(.text.vPortExitCritical)
-	*(.text.flash_bypass_op_write)
+        *(.text.flash_bypass_op_write)
         *(.text.flash_bypass_op_read)
     } > itcm AT>flash
     _itcmcode_flash_begin = LOADADDR(.itcm.code);
     _itcmcode_ram_begin = ADDR(.itcm.code);
     _itcmcode_ram_end = _itcmcode_ram_begin + SIZEOF(.itcm.code);
 
-    . = ALIGN(0x8);
+
 /* code, instructions.for example: i=i+1; */
+
+    . = ALIGN(0x8);
 	.text : 
 	{
 	    *(.text)
@@ -125,13 +127,16 @@ SECTIONS
 		*(.rodata.*)
 		*(.gnu.linkonce.r*)
 	} > flash
-	
+
+
+    __exidx_start = .;
 	.ARM.exidx :
 	{
 	    *(.ARM.exidx*)
 	    *(.gnu.linkonce.armexidx.*)
 	} > flash
-	
+    __exidx_end = .;
+    
     . = ORIGIN(tcm);
     .tcm ALIGN(8) :
     {
@@ -506,6 +511,18 @@ SECTIONS
 
 /* This symbol defines end of code/data sections. Heap starts here. */
 	PROVIDE(end    	  = .);
+
+	. = __exidx_end + SIZEOF(.data);
+	.ty_text_section ALIGN(0x8) :
+	{
+		_ty_section_start = .;
+		/* this is for c++ global constructor init */
+		PROVIDE_HIDDEN (__init_array_start = .);
+		KEEP (*(SORT(*.init_array.*)))
+		KEEP (*(*.init_array*))
+		PROVIDE_HIDDEN (__init_array_end = .);
+	} >flash
+	ty_section_size = SIZEOF(.ty_text_section);
 }
  GROUP(
    libgcc.a

@@ -74,7 +74,7 @@ void power_save_wakeup_with_peri( UINT8 uart2_wk, UINT32 gpio_index_map)
     power_save_ps_mode_set(PS_MCU_PS_MODE);
     param = (0xfffff & ~PWD_UART2_CLK_BIT);
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_NORMAL_SLEEP, &param);
-    delay(200000);
+    bk_delay(200000);
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_NORMAL_WAKEUP, 0);
 
     for (i = 0; i < GPIONUM; i++)
@@ -145,7 +145,7 @@ void power_save_wakeup_with_timer(UINT32 sleep_time)
         else if(wakeup_timer < 32)
             wakeup_timer = 32;
 
-        delay(5);
+        bk_delay(5);
         power_save_pwm1_enable(wakeup_timer);
     }
     else
@@ -163,7 +163,7 @@ void power_save_wakeup_with_timer(UINT32 sleep_time)
     param = (0xfffff & (~PWD_PWM1_CLK_BIT) & (~PWD_UART2_CLK_BIT));
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_RTOS_IDLE_SLEEP, &param);
     PS_DEBUG_UP_OUT;
-    delay(5);
+    bk_delay(5);
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_RTOS_IDLE_WAKEUP, 0);
     phy_init_after_wakeup();
     GLOBAL_INT_RESTORE();
@@ -199,7 +199,7 @@ void power_save_wakeup_with_gpio(UINT32 gpio_index)
     PS_DEBUG_UP_OUT;
     param = (0xfffff & (~PWD_UART2_CLK_BIT));
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_RTOS_IDLE_SLEEP, &param);
-    delay(5);
+    bk_delay(5);
     sddev_control(SCTRL_DEV_NAME, CMD_SCTRL_RTOS_IDLE_WAKEUP, 0);
     phy_init_after_wakeup();
     GLOBAL_INT_RESTORE();
@@ -251,7 +251,7 @@ void bk_enter_deep_sleep_mode ( PS_DEEP_CTRL_PARAM *deep_param )
 	GLOBAL_INT_DECLARATION();
 	GLOBAL_INT_DISABLE();
 	sddev_control ( SCTRL_DEV_NAME, CMD_SCTRL_RTOS_DEEP_SLEEP, deep_param );
-	delay ( 5 );
+	bk_delay ( 5 );
 	GLOBAL_INT_RESTORE();
 	(void)i;
 	(void)param;

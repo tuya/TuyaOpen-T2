@@ -32,7 +32,7 @@ void bk_misc_crash_xat0_reboot(void)
     GLOBAL_INT_DISABLE();
 
     icu_ctrl(CMD_CLK_PWR_DOWN, (void *)&parameter);
-    delay(30000); //100ms
+    bk_delay(30000); //100ms
     wdt_ctrl(WCMD_SET_PERIOD, &wdt_val);
     icu_ctrl(CMD_CLK_PWR_UP, (void *)&parameter);
     while(1);

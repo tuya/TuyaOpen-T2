@@ -2207,7 +2207,7 @@ void phy_agc_reset(void)
     mdm_reg |= MDM_MDMSWRESET_BIT;
     mdm_swreset_set(mdm_reg);
 
-    delay(10);
+    bk_delay(10);
 
     mdm_reg = mdm_swreset_get();
     mdm_reg &= ~MDM_MDMSWRESET_BIT;

@@ -106,7 +106,19 @@ TYUTOOL_DIR=$(pwd)/tools/tyutool
 
 cd beken_os
 
-if [ "$USER_CMD" = "clean" ];then
+TOP_DIR=$(pwd)
+if [ -f ${TOP_DIR}/.app ]; then
+    OLD_APP_BIN_NAME=$(cat ${TOP_DIR}/.app)
+    echo OLD_APP_BIN_NAME: ${OLD_APP_BIN_NAME}
+fi
+
+echo ${APP_BIN_NAME} > ${TOP_DIR}/.app
+if [ "$OLD_APP_BIN_NAME" != "$APP_BIN_NAME" ]; then
+	make clean
+	echo "AUTO CLEAN SUCCESS"
+fi
+
+if [ x"$USER_CMD" = "xclean" ];then
 	# make clean
 	make APP_BIN_NAME=$APP_BIN_NAME APP_VERSION=$APP_VERSION LIBS_DIR=$LIBS_DIR LIBS="$LIBS"  OUTPUT_DIR=$OUTPUT_DIR  HEADER_DIR="$HEADER_DIR" $USER_CMD -j -C ./
 	echo "*************************************************************************"

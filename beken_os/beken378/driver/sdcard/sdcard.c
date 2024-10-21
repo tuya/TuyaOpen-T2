@@ -1026,10 +1026,10 @@ uint8 sd_clk_is_attached(void)
 {
     uint32 tmp, mask, param ;
     sdio_clk_config(0);
-    delay(1);
+    bk_delay(1);
     param = GPIO_CFG_PARAM(sd_clk_pin, GMODE_INPUT_PULLUP);
     sddev_control(GPIO_DEV_NAME, CMD_GPIO_CFG, &param);
-    delay(5);
+    bk_delay(5);
     if(sddev_control(GPIO_DEV_NAME, CMD_GPIO_INPUT, &sd_clk_pin))
     {
         GLOBAL_INT_DECLARATION();
@@ -1047,7 +1047,7 @@ uint8 sd_clk_is_attached(void)
     {
         param = GPIO_CFG_PARAM(sd_clk_pin, GMODE_SECOND_FUNC_PULL_UP);
         sddev_control(GPIO_DEV_NAME, CMD_GPIO_CFG, &param);
-        delay(1);
+        bk_delay(1);
         sdio_clk_config(1);
         return SD_CARD_ONLINE;
     }

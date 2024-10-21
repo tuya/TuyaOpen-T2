@@ -60,7 +60,7 @@ extern void rwnxl_reset_handle(int dummy);
 extern uint32_t ps_get_sleep_prevent(void);
 extern UINT32 txl_cntrl_pck_get(void );
 extern void sctrl_modem_core_reset(void);
-extern void delay(INT32 num);
+extern void bk_delay(INT32 num);
 extern void rw_main(void);
 extern void appm_update_param(struct gapc_conn_param *conn_param);
 
@@ -367,7 +367,7 @@ void ble_set_pn9_trx(uint32 param)
     {
         reg = 0x0;
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
-        delay(10);
+        bk_delay(10);
         reg = 0x2400;
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
     }
@@ -375,7 +375,7 @@ void ble_set_pn9_trx(uint32 param)
     {
         reg = 0x0;
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
-        delay(10);
+        bk_delay(10);
         reg = 0x3800;
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
     }
@@ -418,7 +418,7 @@ UINT32 ble_ctrl( UINT32 cmd, void *param )
         reg = REG_READ(REG_BLE_XVR_TRX_CONFIG_ADDR);
         reg &= ~(1 << REG_BLE_XVR_TEST_RADIO_POST);
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
-        delay(10);
+        bk_delay(10);
         reg |= (1 << REG_BLE_XVR_TEST_RADIO_POST);
         REG_WRITE(REG_BLE_XVR_TRX_CONFIG_ADDR, reg);
         break;

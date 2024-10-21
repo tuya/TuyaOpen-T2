@@ -11,7 +11,7 @@
 
 typedef void (*FUNCPTR)(void);
 
-void delay(uint32_t t)
+void bk_delay(uint32_t t)
 {
 	for(int i  = 1000;i> 0;i--)
 	{

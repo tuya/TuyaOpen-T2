@@ -2508,6 +2508,13 @@ void bk7011_set_rfcali_mode(int mode)
     os_printf("set rfcali_mode:%d\r\n", gcali_context.cali_mode);
 }
 
+char rx2_use_flag = 0;
+
+char get_rx2_flag(void)
+{
+    return rx2_use_flag;
+}
+
 UINT32 rwnx_cal_load_user_rfcali_mode(int *rfcali_mode)
 {
     #define RF_MODE_GPIO_ID                 (GPIO1)
@@ -2524,6 +2531,8 @@ UINT32 rwnx_cal_load_user_rfcali_mode(int *rfcali_mode)
     txpwr_state = manual_cal_txpwr_tab_ready_in_flash();
 
     gpio_level = bk_gpio_input(RF_MODE_GPIO_ID);
+
+    rx2_use_flag = 1;
 
     second_func = GFUNC_MODE_UART2;
     gpio_ctrl(CMD_GPIO_ENABLE_SECOND, &second_func);
