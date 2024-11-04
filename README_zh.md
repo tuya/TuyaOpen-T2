@@ -1,6 +1,8 @@
-# T2
+# tuya-open-sdk-for-device-platform-t2
 
 [English](https://github.com/tuya/T2/blob/master/README.md) | 中文
+
+该仓库为 tuya-open-sdk-for-device 子仓库，无法单独编译与使用，会在 tuya-open-sdk-for-device 中自动下载，详细使用方法参考 [https://github.com/tuya/tuya-open-sdk-for-device](https://github.com/tuya/tuya-open-sdk-for-device)
 
 **涂鸦 T2-U 开发板** 是一款专为开发者打造的智能硬件产品原型开发板。它可与其他功能电路模组或电路板配合使用，实现各种智能硬件产品的开发。涂鸦 T2-U 开发板非常易于使用，您可以利用此开发板快速实现各种智能硬件 Demo。
 
