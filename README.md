@@ -1,7 +1,7 @@
 # tuyaopen-platform-t2
 English | [中文](README_zh.md)
 
-This repository is a sub-repository of tuyaopen and cannot be compiled and used independently. It will be automatically downloaded in tuyaopen. For detailed usage instructions, please refer to [https://github.com/tuya/tuyaopen](https://github.com/tuya/tuyaopene).
+This repository is a sub-repository of tuyaopen and cannot be compiled and used independently. It will be automatically downloaded in tuyaopen. For detailed usage instructions, please refer to [https://github.com/tuya/tuyaopen](https://github.com/tuya/tuyaopen).
 
 **T2-U development board** is designed for prototyping smart devices easily and quickly. You can use it with other purpose-built modules or development boards to evaluate your project.
 
