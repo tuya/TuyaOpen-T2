@@ -104,7 +104,7 @@ fi
 
 TYUTOOL_DIR=$(pwd)/tools/tyutool
 
-cd beken_os
+cd t2_os
 
 TOP_DIR=$(pwd)
 if [ -f ${TOP_DIR}/.app ]; then
