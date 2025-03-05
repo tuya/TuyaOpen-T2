@@ -1,4 +1,4 @@
-# tuyaopen-platform-t2
+# tuyaopen-platform-T2
 
 [English](https://github.com/tuya/T2/blob/master/README.md) | 中文
 
