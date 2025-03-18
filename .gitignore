@@ -18,3 +18,4 @@ gcc-arm-none-eabi-10.3-2021.10
 CatalogKconfig
 
 t2_os/.app
+*.build/
