@@ -23,11 +23,11 @@ extern "C" {
 typedef struct
 {
     uint8_t channel;                 ///< AP channel
-    int8_t rssi;                     ///< AP rssi
+    SCHAR_T rssi;                             ///< AP rssi
     uint8_t bssid[6];                ///< AP bssid
     uint8_t ssid[WIFI_SSID_LEN+1];   ///< AP ssid array
     uint8_t s_len;                   ///< AP ssid len
-    uint8_t security;                //refer to WF_AP_AUTH_MODE_E
+    uint8_t security;           //refer to WF_AP_AUTH_MODE_E
     uint8_t resv1;
     uint8_t data_len;
     uint8_t data[0];
@@ -37,7 +37,8 @@ typedef enum {
     COUNTRY_CODE_CN,
     COUNTRY_CODE_US,
     COUNTRY_CODE_JP,
-    COUNTRY_CODE_EU
+    COUNTRY_CODE_EU,
+    COUNTRY_CODE_TR
 } COUNTRY_CODE_E;
 
 /* tuya sdk definition of wifi function type */
@@ -81,7 +82,7 @@ typedef struct {
     WF_AP_AUTH_MODE_E md;                ///< encryption type
     uint8_t ssid_hidden;                 ///< ssid hidden  default:0
     uint8_t max_conn;                    ///< max sta connect nums default:1
-    uint16_t ms_interval;                ///< broadcast interval default:100
+    USHORT_T ms_interval;                ///< broadcast interval default:100
     NW_IP_S ip;                          ///< ip info for ap mode
 }WF_AP_CFG_IF_S; 
 
@@ -97,12 +98,21 @@ typedef enum {
     WSS_DHCP_FAIL,                      ///< dhcp fail
 }WF_STATION_STAT_E;
 
+typedef struct {
+    CHAR_T ip[16];
+    CHAR_T mask[16];
+    CHAR_T gw[16];
+    CHAR_T dns[16];
+} FAST_DHCP_INFO_T;
 /* for fast connect*/
 typedef struct {
     uint32_t len;                                                    ///< data len
     uint8_t data[0];                                                ///< data buff
-}FAST_WF_CONNECTED_AP_INFO_T;
-
+} FAST_WF_CONNECTED_AP_INFO_T;
+typedef struct {
+    FAST_DHCP_INFO_T             fast_dhcp;
+    FAST_WF_CONNECTED_AP_INFO_T  fast_mac;
+} FAST_CONNECTED_INFO_T;
 /* tuya sdk definition of wifi event notify */
 typedef enum
 {
@@ -135,6 +145,7 @@ typedef enum {
     TUYA_WLAN_REASON_4WAYS_HANDSHAKE_TIMEOUT,        ///< Timeout of 4-way handshake
     TUYA_WLAN_REASON_INACTIVITY_DISCONNECT,          ///< Station disconnected to AP beacause of in activity
     TUYA_WLAN_REASON_DEAUTH_LEAVING,                 ///< Deauth the station because it was left
+    TUYA_WLAN_REASON_AP_UNABLE_TO_HANDLE_NEW_STA,    ///< Association denied because AP is unable to handle additional associated STAs
     TUYA_WLAN_REASON_MAX,
 } WF_DISCONN_REASON_E;
 
@@ -142,15 +153,31 @@ typedef enum {
 typedef enum {
     WFI_BEACON_CMD,
     WFI_GET_LAST_DISCONN_REASON,                     ///< Get WiFi last disconnect reason
-    WFI_AP_GET_STALIST_CMD,
+    WFI_AP_GET_STALIST_CMD,                          ///< Get Sta List Cmd 
+    WFI_CONNECT_CMD,
 } WF_IOCTL_CMD_E;
+
+typedef struct {
+    uint8_t    *ssid;
+    uint8_t    *passwd;
+    uint8_t     channel;
+} WF_IOCTL_CONN_T;
+
+typedef enum {
+    IPV4_DHCP_SUCC,
+    IPV4_DHCP_FAIL,
+    IPV6_LL_SUCC,
+    IPV6_LL_FAIL,
+    IPV6_DHCP_SUCC,
+    IPV6_DHCP_FAIL,
+} LWIP_EVENT_E;
 
 typedef struct {
     uint8_t     ssid[WIFI_SSID_LEN + 1];
     uint8_t     channel;
     NW_MAC_S    mac;
     uint32_t      vsie_data_len;
-    uint8_t     *vsie_data;
+    BYTE_T     *vsie_data;
 } WF_IOCTL_BEACON_T;
 
 typedef struct {
@@ -162,7 +189,6 @@ typedef struct {
     WF_STA_INFO_S  *array;
     uint32_t          num;
 } WF_STA_LIST_S;
-
 /**
  * @brief callback function: SNIFFER_CALLBACK
  *        when wifi sniffers package from air, notify tuyaos
@@ -170,7 +196,7 @@ typedef struct {
  * @param[in]       buf         the buf wifi recv
  * @param[in]       len         the len of buf
  */
-typedef void (*SNIFFER_CALLBACK)(const uint8_t *buf, const uint16_t len, const int8_t rssi);
+typedef void (*SNIFFER_CALLBACK)(const uint8_t *buf, const UINT16_T len, const INT8_T rssi);
 
 /**
  * @brief callback function: WIFI_REV_MGNT_CB
@@ -211,7 +237,7 @@ OPERATE_RET tkl_wifi_init(WIFI_EVENT_CB cb);
  *
  * @note if ssid == NULL means scan all ap, otherwise means scan the specific ssid
  */
-OPERATE_RET tkl_wifi_scan_ap(const int8_t *ssid, AP_IF_S **ap_ary, uint32_t *num);
+OPERATE_RET tkl_wifi_scan_ap(const SCHAR_T *ssid, AP_IF_S **ap_ary, uint32_t *num);
 
 /**
  * @brief release the memory malloced in <tkl_wifi_ap_scan>
@@ -267,16 +293,6 @@ OPERATE_RET tkl_wifi_get_cur_channel(uint8_t *chan);
 OPERATE_RET tkl_wifi_set_sniffer(const BOOL_T en, const SNIFFER_CALLBACK cb);
 
 /**
- * @brief set wifi ip info.when wifi works in
- *        ap+station mode, wifi has two ips.
- * 
- * @param[in]       wf          wifi function type
- * @param[out]      ip          the ip addr info
- * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
- */
-OPERATE_RET tkl_wifi_set_ip(const WF_IF_E wf, NW_IP_S *ip);
-
-/**
  * @brief get wifi ip info.when wifi works in
  *        ap+station mode, wifi has two ips.
  * 
@@ -285,6 +301,26 @@ OPERATE_RET tkl_wifi_set_ip(const WF_IF_E wf, NW_IP_S *ip);
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
 OPERATE_RET tkl_wifi_get_ip(const WF_IF_E wf, NW_IP_S *ip);
+
+/**
+ * @brief get wifi ip info.when wifi works in
+ *        ap+station mode, wifi has two ips.
+ *
+ * @param[in]       wf          wifi function type
+ * @param[in]       wf          wifi ip type
+ * @param[out]      ip          the ip addr info
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_get_ipv6(const WF_IF_E wf, NW_IP_TYPE type, NW_IP_S *ip);
+
+/**
+ * @brief wifi set ip
+ *
+ * @param[in]       wf     wifi function type
+ * @param[in]       ip     the ip addr info
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_set_ip(const WF_IF_E wf, NW_IP_S *ip);
 
 /**
  * @brief set wifi mac info.when wifi works in
@@ -352,7 +388,7 @@ OPERATE_RET tkl_wifi_set_country_code(const COUNTRY_CODE_E ccode);
  *
  * @return true on success. faile on failure
  */
-BOOL_T tkl_wifi_set_rf_calibrated(void);
+OPERATE_RET tkl_wifi_set_rf_calibrated(void);
 
 /**
  * @brief set wifi lowpower mode
@@ -377,7 +413,7 @@ OPERATE_RET tkl_wifi_station_fast_connect(const FAST_WF_CONNECTED_AP_INFO_T *fas
  * @param[in]       passwd
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_station_connect(const int8_t *ssid, const int8_t *passwd);
+OPERATE_RET tkl_wifi_station_connect(const SCHAR_T *ssid, const SCHAR_T *passwd);
 
 /**
  * @brief disconnect wifi from connect ap
@@ -392,7 +428,7 @@ OPERATE_RET tkl_wifi_station_disconnect(void);
  * @param[out]      rssi        the return rssi
  * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
  */
-OPERATE_RET tkl_wifi_station_get_conn_ap_rssi(int8_t *rssi);
+OPERATE_RET tkl_wifi_station_get_conn_ap_rssi(SCHAR_T *rssi);
 
 
 /**
@@ -422,7 +458,6 @@ OPERATE_RET tkl_wifi_send_mgnt(const uint8_t *buf, const uint32_t len);
  */
 OPERATE_RET tkl_wifi_register_recv_mgnt_callback(const BOOL_T enable, const WIFI_REV_MGNT_CB recv_cb);
 
-
 /**
  * @brief wifi ioctl
  *
@@ -432,11 +467,21 @@ OPERATE_RET tkl_wifi_register_recv_mgnt_callback(const BOOL_T enable, const WIFI
  */
 OPERATE_RET tkl_wifi_ioctl(WF_IOCTL_CMD_E cmd,  void *args);
 
+/**
+ * @brief get wifi country code
+ * 
+ * @param[out]       ccode  country code
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_get_country_code(uint8_t *ccode);
 
-
-OPERATE_RET tkl_wifi_get_all_sta_info(WF_STA_INFO_S **sta_ary, uint32_t *num);
-
-
+/**
+ * @brief set wifi country code
+ * 
+ * @param[in]       ccode  country code
+ * @return OPRT_OK on success. Others on error, please refer to tuya_error_code.h
+ */
+OPERATE_RET tkl_wifi_set_country_code_v2(const uint8_t *ccode);
 
 #ifdef __cplusplus
 }
